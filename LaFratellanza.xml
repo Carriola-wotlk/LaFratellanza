@@ -1,0 +1,249 @@
+<Ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://www.blizzard.com/wow/ui/">
+	<Button name="LaFratellanzaButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="128" y="32"/>
+		</Size>
+		<Layers>
+			<Layer level="OVERLAY">
+				<Texture name="$parent_IconTexture">
+					<Size x="32" y="32"/>
+					<Anchors>
+						<Anchor point="LEFT"/>
+					</Anchors>
+				</Texture>
+				<FontString name="$parent_Voice" parentKey="title" inherits="GameFontNormal" wraponspaces="false" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT">
+							<Offset x="38" y="0"/>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+
+		</Layers>
+		<NormalTexture name="$parent_NormalTexture" file="Interface\AddOns\LaFratellanza\texture\buttons\button-normal">
+			<Size>
+				<AbsDimension x="128" y="32"/>
+			</Size>
+			<Anchors>
+				<Anchor point="CENTER">
+					<Offset>
+						<AbsDimension x="0" y="-1"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</NormalTexture>
+		<PushedTexture file="Interface\AddOns\LaFratellanza\texture\buttons\button-press"/>
+		<HighlightTexture file="Interface\AddOns\LaFratellanza\texture\buttons\button-hover" alphaMode="ADD"/>
+		<Scripts>
+			<OnClick function="LaFratellanza_MenuButton_OnClick"/>
+		</Scripts>
+	</Button>
+
+	<Frame name="LaFratellanza_Member_Template" virtual="true">
+		<Size x="640" y="32"/>
+		<Anchors>
+			<Anchor point="LEFT">
+				<Offset x="36" y="0"/>
+			</Anchor>
+		</Anchors>
+
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="LaFratellanza_Member_Texture" file="Interface\AddOns\LaFratellanza\texture\frames\member-left">
+					<Anchors>
+						<Anchor point="LEFT"/>
+					</Anchors>
+				</Texture>
+				<Texture name="LaFratellanza_Member_Texture" file="Interface\AddOns\LaFratellanza\texture\frames\member-right">
+					<Anchors>
+						<Anchor point="RIGHT"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+				<Texture name="$parent_IconTexture">
+					<Size x="32" y="32"/>
+					<Anchors>
+						<Anchor point="LEFT">
+							<Offset x="9" y="0"/>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<FontString name="$parent_Voice" parentKey="title" inherits="GameFontNormal" wraponspaces="false" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativePoint="LEFT" relativeTo="$parent_IconTexture">
+							<Offset x="40" y="0"/>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parent_Level" parentKey="title" inherits="GameFontNormal" wraponspaces="false" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativePoint="LEFT" relativeTo="$parent_Voice">
+							<Offset x="115" y="0"/>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<Texture name="$parent_MainSpec">
+					<Size x="32" y="32"/>
+					<Anchors>
+						<Anchor point="LEFT" relativePoint="LEFT" relativeTo="$parent_Level">
+							<Offset x="40" y="0"/>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<Texture name="$parent_OffSpec">
+					<Size x="32" y="32"/>
+					<Anchors>
+						<Anchor point="LEFT" relativePoint="LEFT" relativeTo="$parent_MainSpec">
+							<Offset x="30" y="0"/>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<Texture name="$parent_MainProf">
+					<Size x="32" y="32"/>
+					<Anchors>
+						<Anchor point="LEFT" relativePoint="LEFT" relativeTo="$parent_OffSpec">
+							<Offset x="40" y="0"/>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<Texture name="$parent_OffProf">
+					<Size x="32" y="32"/>
+					<Anchors>
+						<Anchor point="LEFT" relativePoint="LEFT" relativeTo="$parent_MainProf">
+							<Offset x="30" y="0"/>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<FontString name="$parent_Zone" parentKey="title" inherits="GameFontNormal" wraponspaces="false" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativePoint="LEFT" relativeTo="$parent_OffProf">
+							<Offset x="50" y="0"/>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+
+	</Frame>
+
+	<Frame name="LaFratellanza_Main_Frame" toplevel="true" parent="UIParent" enableMouse="true" movable="true" hidden="true">
+		<Size x="1024" y="576"/>
+		<Anchors>
+			<Anchor point="CENTER" relativePoint="CENTER" relativeTo="UIParent"/>
+		</Anchors>
+
+		<Layers>
+
+			<Layer level="OVERLAY">
+				<FontString name="$parent_Title" parentKey="title" inherits="GameFontNormal" text="La Fratellanza">
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset x="-45" y="-18"/>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+
+			<Layer level="BACKGROUND">
+				<Texture file="Interface\AddOns\LaFratellanza\texture\frames\main-top-left">
+					<Anchors>
+						<Anchor point="TOPLEFT"/>
+					</Anchors>
+				</Texture>
+				<Texture name="LaFratellanza_main_texture_top_right" file="Interface\AddOns\LaFratellanza\texture\frames\members-top-right">
+					<Anchors>
+						<Anchor point="TOPRIGHT"/>
+					</Anchors>
+				</Texture>
+				<Texture file="Interface\AddOns\LaFratellanza\texture\frames\main-bottom-left">
+					<Anchors>
+						<Anchor point="BOTTOMLEFT"/>
+					</Anchors>
+				</Texture>
+				<Texture name="LaFratellanza_main_texture_bottom_right" file="Interface\AddOns\LaFratellanza\texture\frames\members-bottom-right">
+					<Anchors>
+						<Anchor point="BOTTOMRIGHT"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+
+
+		</Layers>
+
+		<Frames>
+			<Button name="LaFratellanza_Button" inherits="UIPanelCloseButton">
+				<Anchors>
+					<Anchor point="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-3" y="-3"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick function="LaFratellanza_CloseMainFrame"/>
+				</Scripts>
+			</Button>
+
+			<Frame name="LaFratellanza_Main_Frame_Members" hidden="true">
+				<Size x="768" y="512"/>
+				<Anchors>
+					<Anchor point="CENTER">
+						<Offset x="55" y="-20"/>
+					</Anchor>
+				</Anchors>
+
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture file="Interface\AddOns\LaFratellanza\texture\frames\members-background-left">
+							<Anchors>
+								<Anchor point="LEFT"/>
+							</Anchors>
+						</Texture>
+						<Texture file="Interface\AddOns\LaFratellanza\texture\frames\members-background-right">
+							<Anchors>
+								<Anchor point="RIGHT"/>
+							</Anchors>
+						</Texture>
+					</Layer>
+
+				</Layers>
+
+			</Frame>
+			<Slider name="LaFratellanza_Main_Frame_Members_Slider" orientation="VERTICAL">
+				<Size>
+					<AbsDimension x="30" y="236"/>
+				</Size>
+				<Anchors>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="LaFratellanza_Main_Frame_Members" />
+				</Anchors>
+
+				<Backdrop edgeFile="Interface\Buttons\UI-SliderBar-Border" bgFile="Interface\Buttons\UI-SliderBar-Background" tile="true">
+					<EdgeSize>
+						<AbsValue val="8"/>
+					</EdgeSize>
+					<TileSize>
+						<AbsValue val="8"/>
+					</TileSize>
+					<BackgroundInsets>
+						<AbsInset left="3" right="3" top="6" bottom="6"/>
+					</BackgroundInsets>
+				</Backdrop>
+
+				<ThumbTexture name="$parent_ThumbTexture" file="Interface\Buttons\UI-ScrollBar-Knob">
+					<Size>
+						<AbsDimension x="32" y="32"/>
+					</Size>
+				</ThumbTexture>
+			</Slider>
+		</Frames>
+
+		<Scripts>
+			<OnLoad function="LaFratellanza_OnLoad"/>
+		</Scripts>
+	</Frame>
+
+</Ui>

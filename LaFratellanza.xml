@@ -106,7 +106,7 @@
 					<Size x="32" y="32"/>
 					<Anchors>
 						<Anchor point="LEFT" relativePoint="LEFT" relativeTo="$parent_OffSpec">
-							<Offset x="40" y="0"/>
+							<Offset x="50" y="0"/>
 						</Anchor>
 					</Anchors>
 				</Texture>
@@ -125,6 +125,14 @@
 						</Anchor>
 					</Anchors>
 				</FontString>
+				<Texture name="$parent_Rank">
+					<Size x="64" y="32"/>
+					<Anchors>
+						<Anchor point="LEFT" relativePoint="LEFT" relativeTo="$parent_Zone">
+							<Offset x="200" y="0"/>
+						</Anchor>
+					</Anchors>
+				</Texture>
 			</Layer>
 		</Layers>
 

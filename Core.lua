@@ -75,6 +75,19 @@ mainButton:SetSize(100, 30)
 mainButton:SetMovable(true)
 mainButton:SetText("La Fratellanza")
 
+
+
+-- UTILS ----------------------------------------------
+function Trim(s)
+    return s:match'^%s*(.*%S)' or ''
+end
+
+function ToLowerCase(s)
+    return s:lower()
+end
+
+----------------------------------------------------------------
+
 function LaFratellanza_OnLoad(self)
     self.items = {}
     for idx, value in ipairs(navBar) do
@@ -235,14 +248,12 @@ function LaFratellanza_MembersFrameInit(section)
         listLength = 12
     end
 
-    for i, player in ipairs(guild_Roster["offline"]) do
-        if(player.name == "Becchino") then
+    for i, player in ipairs(guild_Roster["online"]) do
+        if(player.name == "Carriola") then
             print("EEEEEEEEEEEEEEEEEEEEEEEEE")
-            print(player.prof.main)
-            print(player.prof.off)
-            print(player.spec.main)
-            print(player.spec.off)
+            print(player.rank)
             print(player.altOf)
+            print(ToLowerCase(Trim(player.rank)))
         end
     end
 
@@ -253,9 +264,15 @@ function LaFratellanza_MembersFrameInit(section)
         _G["LaFratellanza_Member" .. idx .. "_Level"]:SetText(guild_Roster[section][idx].lvl)
         _G["LaFratellanza_Member" .. idx .. "_MainSpec"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx].class)
         _G["LaFratellanza_Member" .. idx .. "_OffSpec"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx].class)
-        _G["LaFratellanza_Member" .. idx .. "_MainProf"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx].class)
-        _G["LaFratellanza_Member" .. idx .. "_OffProf"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx].class)
+        if(guild_Roster[section][idx].prof.main) then
+            _G["LaFratellanza_Member" .. idx .. "_MainProf"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx].prof.main)
+        end
+        if(guild_Roster[section][idx].prof.off) then
+            _G["LaFratellanza_Member" .. idx .. "_OffProf"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx].prof.off)
+        end
         _G["LaFratellanza_Member" .. idx .. "_Zone"]:SetText(guild_Roster[section][idx].zone)
+        _G["LaFratellanza_Member" .. idx .. "_Rank"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\rank_]] .. ToLowerCase(Trim(guild_Roster[section][idx].rank)))
+
         if idx == 1 then
             item:SetPoint("TOP", 0, -90)
         else

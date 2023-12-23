@@ -106,7 +106,7 @@
 					<Size x="32" y="32"/>
 					<Anchors>
 						<Anchor point="LEFT" relativePoint="LEFT" relativeTo="$parent_OffSpec">
-							<Offset x="40" y="0"/>
+							<Offset x="50" y="0"/>
 						</Anchor>
 					</Anchors>
 				</Texture>

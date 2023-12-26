@@ -6,4 +6,3 @@
 
 Core.lua
 LaFratellanza.xml
-tables.lua

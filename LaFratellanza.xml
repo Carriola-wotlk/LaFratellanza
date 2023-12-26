@@ -1,7 +1,8 @@
 <Ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	xmlns="http://www.blizzard.com/wow/ui/">
-	<Button name="LaFratellanzaButtonTemplate" virtual="true">
+
+	<Button name="LaFratellanzaMenuButtonTemplate" virtual="true">
 		<Size>
 			<AbsDimension x="128" y="32"/>
 		</Size>
@@ -106,7 +107,7 @@
 					<Size x="32" y="32"/>
 					<Anchors>
 						<Anchor point="LEFT" relativePoint="LEFT" relativeTo="$parent_OffSpec">
-							<Offset x="40" y="0"/>
+							<Offset x="50" y="0"/>
 						</Anchor>
 					</Anchors>
 				</Texture>
@@ -125,6 +126,14 @@
 						</Anchor>
 					</Anchors>
 				</FontString>
+				<Texture name="$parent_Rank">
+					<Size x="64" y="32"/>
+					<Anchors>
+						<Anchor point="LEFT" relativePoint="LEFT" relativeTo="$parent_Zone">
+							<Offset x="200" y="0"/>
+						</Anchor>
+					</Anchors>
+				</Texture>
 			</Layer>
 		</Layers>
 
@@ -213,32 +222,7 @@
 				</Layers>
 
 			</Frame>
-			<Slider name="LaFratellanza_Main_Frame_Members_Slider" orientation="VERTICAL">
-				<Size>
-					<AbsDimension x="30" y="236"/>
-				</Size>
-				<Anchors>
-					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="LaFratellanza_Main_Frame_Members" />
-				</Anchors>
 
-				<Backdrop edgeFile="Interface\Buttons\UI-SliderBar-Border" bgFile="Interface\Buttons\UI-SliderBar-Background" tile="true">
-					<EdgeSize>
-						<AbsValue val="8"/>
-					</EdgeSize>
-					<TileSize>
-						<AbsValue val="8"/>
-					</TileSize>
-					<BackgroundInsets>
-						<AbsInset left="3" right="3" top="6" bottom="6"/>
-					</BackgroundInsets>
-				</Backdrop>
-
-				<ThumbTexture name="$parent_ThumbTexture" file="Interface\Buttons\UI-ScrollBar-Knob">
-					<Size>
-						<AbsDimension x="32" y="32"/>
-					</Size>
-				</ThumbTexture>
-			</Slider>
 		</Frames>
 
 		<Scripts>

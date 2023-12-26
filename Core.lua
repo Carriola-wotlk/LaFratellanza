@@ -75,10 +75,23 @@ mainButton:SetSize(100, 30)
 mainButton:SetMovable(true)
 mainButton:SetText("La Fratellanza")
 
+
+
+-- UTILS ----------------------------------------------
+function Trim(s)
+    return s:match'^%s*(.*%S)' or ''
+end
+
+function ToLowerCase(s)
+    return s:lower()
+end
+
+----------------------------------------------------------------
+
 function LaFratellanza_OnLoad(self)
     self.items = {}
     for idx, value in ipairs(navBar) do
-        local item = CreateFrame("Button", "LaFratellanza_Button" .. idx, self, "LaFratellanzaButtonTemplate")
+        local item = CreateFrame("Button", "LaFratellanza_Button" .. idx, self, "LaFratellanzaMenuButtonTemplate")
         self.items[idx] = item
         _G["LaFratellanza_Button" .. idx .. "_Voice"]:SetText(value)
         _G["LaFratellanza_Button" .. idx .. "_IconTexture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. value .. "_icon")
@@ -224,26 +237,54 @@ function LaFratellanza_GetMemberProps(name, rank, lvl, cl, zone, note, offNote, 
     return result
 end
 
+function LaFratellanza_ScrollBarInit(membersFrame)
+    local scrollFrame = CreateFrame("ScrollFrame", "LaFratellanza_Main_Frame_Members_ScrollFrame", membersFrame, "UIPanelScrollFrameTemplate")
+    local slider = CreateFrame("Slider", "LaFratellanza_Main_Frame_Members_Slider", scrollFrame, "OptionsSliderTemplate")
+
+    membersFrame.scrollFrame = scrollFrame
+    membersFrame.slider = slider
+
+    scrollFrame:SetPoint("LEFT", membersFrame, "RIGHT", -108, -10)
+    scrollFrame:SetSize(25, 430)
+    scrollFrame:EnableMouseWheel(true)
+
+    slider:SetSize(25, 445)
+    slider:SetPoint("LEFT", membersFrame, "RIGHT", -82, -10)
+    slider:SetBackdrop({
+        edgeFile = "Interface\\Buttons\\UI-SliderBar-Border",
+        bgFile = "Interface\\Buttons\\UI-SliderBar-Background",
+        tile = true,
+        edgeSize = 8,
+        tileSize = 8,
+        insets = { left = 3, right = 3, top = 6, bottom = 6 },
+    })
+
+    local scrollChild = CreateFrame("Frame", "LaFratellanza_Main_Frame_Members_ScrollChild", scrollFrame)
+    scrollChild:SetSize(1, membersFrame:GetHeight())
+    scrollFrame:SetScrollChild(scrollChild)
+
+    scrollFrame:SetScript("OnVerticalScroll", function(self, value)
+        self:SetVerticalScroll(value)
+        print("AAAAAAAAAAAAA")
+    end)
+end
+
+
+
 
 function LaFratellanza_MembersFrameInit(section)
     local membersFrame = _G["LaFratellanza_Main_Frame_Members"]
-    local listLength = #guild_Roster["online"]
+    local listLength = #guild_Roster[section]
 
     membersFrame:Show()
 
+    LaFratellanza_ScrollBarInit(membersFrame)
+
+    local scrollChild = membersFrame.scrollFrame:GetScrollChild()
+    scrollChild:SetSize(1, listLength * 32)
+    
     if listLength > 12 then
         listLength = 12
-    end
-
-    for i, player in ipairs(guild_Roster["offline"]) do
-        if(player.name == "Becchino") then
-            print("EEEEEEEEEEEEEEEEEEEEEEEEE")
-            print(player.prof.main)
-            print(player.prof.off)
-            print(player.spec.main)
-            print(player.spec.off)
-            print(player.altOf)
-        end
     end
 
     for idx = 1, listLength do
@@ -253,9 +294,15 @@ function LaFratellanza_MembersFrameInit(section)
         _G["LaFratellanza_Member" .. idx .. "_Level"]:SetText(guild_Roster[section][idx].lvl)
         _G["LaFratellanza_Member" .. idx .. "_MainSpec"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx].class)
         _G["LaFratellanza_Member" .. idx .. "_OffSpec"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx].class)
-        _G["LaFratellanza_Member" .. idx .. "_MainProf"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx].class)
-        _G["LaFratellanza_Member" .. idx .. "_OffProf"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx].class)
+        if(guild_Roster[section][idx].prof.main) then
+            _G["LaFratellanza_Member" .. idx .. "_MainProf"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx].prof.main)
+        end
+        if(guild_Roster[section][idx].prof.off) then
+            _G["LaFratellanza_Member" .. idx .. "_OffProf"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx].prof.off)
+        end
         _G["LaFratellanza_Member" .. idx .. "_Zone"]:SetText(guild_Roster[section][idx].zone)
+        _G["LaFratellanza_Member" .. idx .. "_Rank"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\rank_]] .. ToLowerCase(Trim(guild_Roster[section][idx].rank)))
+
         if idx == 1 then
             item:SetPoint("TOP", 0, -90)
         else

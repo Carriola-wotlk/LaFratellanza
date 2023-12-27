@@ -7,6 +7,10 @@ local guild_Roster = {
 }
 local modeView = "online"
 
+-- MEMBERS
+local listLength = 0
+local membersFrame
+
 local profTable = {
     ski = "Skinning",
     alc = "Alchemy",
@@ -263,31 +267,32 @@ function LaFratellanza_ScrollBarInit(membersFrame)
     scrollChild:SetSize(1, membersFrame:GetHeight())
     scrollFrame:SetScrollChild(scrollChild)
 
+    local lineHeight = 32  -- Altezza di ogni riga
+    local numVisibleRows = 5  -- Numero di righe visibili alla volta
+    local stepSize = numVisibleRows * lineHeight
+
     scrollFrame:SetScript("OnVerticalScroll", function(self, value)
-        self:SetVerticalScroll(value)
-        print("AAAAAAAAAAAAA")
+        local minValue, maxValue = self:GetMinMaxValues()
+        local newValue = math.floor(value / stepSize + 0.5) * stepSize
+        if newValue < minValue then
+            newValue = minValue
+        elseif newValue > maxValue then
+            newValue = maxValue
+        end
+        self:SetValue(newValue)
     end)
 end
 
 
+function LaFratellanza_MemberListUpdate(section, index)
+    local newLength = listLength - index + 1
 
-
-function LaFratellanza_MembersFrameInit(section)
-    local membersFrame = _G["LaFratellanza_Main_Frame_Members"]
-    local listLength = #guild_Roster[section]
-
-    membersFrame:Show()
-
-    LaFratellanza_ScrollBarInit(membersFrame)
-
-    local scrollChild = membersFrame.scrollFrame:GetScrollChild()
-    scrollChild:SetSize(1, listLength * 32)
-    
-    if listLength > 12 then
-        listLength = 12
+    print(newLength)
+    if newLength > 13 then
+        newLength = 13
     end
 
-    for idx = 1, listLength do
+    for idx = index, newLength+index-1 do
         local item = CreateFrame("Frame", "LaFratellanza_Member" .. idx, membersFrame, "LaFratellanza_Member_Template")
         _G["LaFratellanza_Member" .. idx .. "_IconTexture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx].class)
         _G["LaFratellanza_Member" .. idx .. "_Voice"]:SetText(guild_Roster[section][idx].name)
@@ -303,12 +308,31 @@ function LaFratellanza_MembersFrameInit(section)
         _G["LaFratellanza_Member" .. idx .. "_Zone"]:SetText(guild_Roster[section][idx].zone)
         _G["LaFratellanza_Member" .. idx .. "_Rank"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\rank_]] .. ToLowerCase(Trim(guild_Roster[section][idx].rank)))
 
-        if idx == 1 then
-            item:SetPoint("TOP", 0, -90)
+        if idx == index then
+            item:SetPoint("TOP", 0, -60)
         else
             item:SetPoint("TOP", _G["LaFratellanza_Member" .. idx-1], "BOTTOM", 0, 0)
         end
     end
+end
+
+
+
+function LaFratellanza_MembersFrameInit(section)
+    membersFrame = _G["LaFratellanza_Main_Frame_Members"]
+    listLength = #guild_Roster[section]
+
+    membersFrame:Show()
+
+    if(listLength > 13) then
+        LaFratellanza_ScrollBarInit(membersFrame)
+
+        local scrollChild = membersFrame.scrollFrame:GetScrollChild()
+        scrollChild:SetSize(1, listLength * 32)
+    end
+    
+    LaFratellanza_MemberListUpdate(section, 1)
+
 end
 
 
@@ -332,6 +356,7 @@ function LaFratellanza_RosterInit()
                 end
              end
          end
+         _G["LaFratellanza_Main_Frame_Members_RosterStatus"]:SetText("Online: " .. #guild_Roster["online"] .. "/" .. #guild_Roster["online"]+#guild_Roster["offline"])
          LaFratellanza_MembersFrameInit("online")
      end
      SetCVar("guildShowOffline", 0)

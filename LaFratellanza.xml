@@ -69,7 +69,7 @@
 					<Size x="32" y="32"/>
 					<Anchors>
 						<Anchor point="LEFT">
-							<Offset x="9" y="0"/>
+							<Offset x="6" y="0"/>
 						</Anchor>
 					</Anchors>
 				</Texture>

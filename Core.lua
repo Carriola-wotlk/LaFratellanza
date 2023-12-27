@@ -5,7 +5,7 @@ local guild_Roster = {
     online = {},
     offline = {},
 }
-local modeView = "online"
+local section = "online"
 
 -- MEMBERS
 local listLength = 0
@@ -42,8 +42,8 @@ local specTable = {
     fer = "Feral",
     bal = "Balance",
 
-    bea = "Beast Mastery",
-    bm = "Beast Mastery",
+    bea = "BeastMastery",
+    bm = "BeastMastery",
     mar = "Marksmanship",
     mm = "Marksmanship",
     sur = "Survival",
@@ -66,11 +66,12 @@ local specTable = {
     ret = "Retribution",
 
     com = "Combat",
-    ass = "Assassin",
+    ass = "Assassination",
     sub = "Subtlety",
 
     ele = "Elemental",
     enh = "Enhancement",
+    ena = "Enhancement",
 }
 
 local mainButton = CreateFrame("Button", "LaFratellanzaInitialButton", UIParent, "UIPanelButtonTemplate")
@@ -241,6 +242,65 @@ function LaFratellanza_GetMemberProps(name, rank, lvl, cl, zone, note, offNote, 
     return result
 end
 
+
+function LaFratellanza_ClearMemberRow(idx)
+    _G["LaFratellanza_Member" .. idx .. "_IconTexture"]:SetTexture(nil)
+    _G["LaFratellanza_Member" .. idx .. "_Voice"]:SetText(nil)
+    _G["LaFratellanza_Member" .. idx .. "_Level"]:SetText(nil)
+    _G["LaFratellanza_Member" .. idx .. "_MainSpec"]:SetTexture(nil)
+    _G["LaFratellanza_Member" .. idx .. "_OffSpec"]:SetTexture(nil)
+    _G["LaFratellanza_Member" .. idx .. "_MainProf"]:SetTexture(nil)
+    _G["LaFratellanza_Member" .. idx .. "_OffProf"]:SetTexture(nil)
+    _G["LaFratellanza_Member" .. idx .. "_Zone"]:SetText(nil)
+    _G["LaFratellanza_Member" .. idx .. "_Rank"]:SetTexture(nil)
+end
+
+
+function LaFratellanza_MemberListUpdate(index)
+    print("index ----->", index)
+  
+    for idx = 1, 13 do
+        LaFratellanza_ClearMemberRow(idx)
+   
+        _G["LaFratellanza_Member" .. idx .. "_IconTexture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx+index].class)
+        _G["LaFratellanza_Member" .. idx .. "_Voice"]:SetText(guild_Roster[section][idx+index].name)
+        _G["LaFratellanza_Member" .. idx .. "_Level"]:SetText(guild_Roster[section][idx+index].lvl)
+
+        if(guild_Roster[section][idx+index].spec.main) then
+            _G["LaFratellanza_Member" .. idx .. "_MainSpec"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx+index].spec.main .. guild_Roster[section][idx+index].class)
+        end
+
+        if(guild_Roster[section][idx+index].spec.off) then
+            _G["LaFratellanza_Member" .. idx .. "_OffSpec"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx+index].spec.off .. guild_Roster[section][idx+index].class)
+        end
+        
+        if(guild_Roster[section][idx+index].prof.main) then
+            _G["LaFratellanza_Member" .. idx .. "_MainProf"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx+index].prof.main)
+        end
+        if(guild_Roster[section][idx+index].prof.off) then
+            _G["LaFratellanza_Member" .. idx .. "_OffProf"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx+index].prof.off)
+        end
+        _G["LaFratellanza_Member" .. idx .. "_Zone"]:SetText(guild_Roster[section][idx+index].zone)
+        _G["LaFratellanza_Member" .. idx .. "_Rank"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\rank_]] .. ToLowerCase(Trim(guild_Roster[section][idx+index].rank)))
+    end
+end
+
+function LaFratellanza_MemberListInit()
+    for idx = 1, 13 do
+        local item = CreateFrame("Frame", "LaFratellanza_Member" .. idx, membersFrame, "LaFratellanza_Member_Template")
+        
+        if idx == 1 then
+            item:SetPoint("TOP", 0, -60)
+        else
+            item:SetPoint("TOP", _G["LaFratellanza_Member" .. idx-1], "BOTTOM", 0, 0)
+        end
+    end
+
+    LaFratellanza_MemberListUpdate(0)
+end
+
+
+
 function LaFratellanza_ScrollBarInit(membersFrame)
     local scrollFrame = CreateFrame("ScrollFrame", "LaFratellanza_Main_Frame_Members_ScrollFrame", membersFrame, "UIPanelScrollFrameTemplate")
     local slider = CreateFrame("Slider", "LaFratellanza_Main_Frame_Members_Slider", scrollFrame, "OptionsSliderTemplate")
@@ -264,61 +324,37 @@ function LaFratellanza_ScrollBarInit(membersFrame)
     })
 
     local scrollChild = CreateFrame("Frame", "LaFratellanza_Main_Frame_Members_ScrollChild", scrollFrame)
-    scrollChild:SetSize(1, membersFrame:GetHeight())
+
+    local minValue = 1
+    local maxValue = listLength*32
+    scrollChild:SetSize(minValue, maxValue)
     scrollFrame:SetScrollChild(scrollChild)
 
-    local lineHeight = 32  -- Altezza di ogni riga
-    local numVisibleRows = 5  -- Numero di righe visibili alla volta
-    local stepSize = numVisibleRows * lineHeight
+    local stepSize = 5 * 32
+
+    slider:SetValue(1)
+    slider:SetMinMaxValues(1, (listLength * 32)-(13*32))
+    slider:SetValueStep(1.0)
 
     scrollFrame:SetScript("OnVerticalScroll", function(self, value)
-        local minValue, maxValue = self:GetMinMaxValues()
         local newValue = math.floor(value / stepSize + 0.5) * stepSize
+        
+        if(newValue < 160) then
+            newValue = 160
+        end
+
         if newValue < minValue then
             newValue = minValue
         elseif newValue > maxValue then
             newValue = maxValue
         end
-        self:SetValue(newValue)
+        print(value)
+        LaFratellanza_MemberListUpdate((newValue/32))
     end)
 end
 
 
-function LaFratellanza_MemberListUpdate(section, index)
-    local newLength = listLength - index + 1
-
-    print(newLength)
-    if newLength > 13 then
-        newLength = 13
-    end
-
-    for idx = index, newLength+index-1 do
-        local item = CreateFrame("Frame", "LaFratellanza_Member" .. idx, membersFrame, "LaFratellanza_Member_Template")
-        _G["LaFratellanza_Member" .. idx .. "_IconTexture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx].class)
-        _G["LaFratellanza_Member" .. idx .. "_Voice"]:SetText(guild_Roster[section][idx].name)
-        _G["LaFratellanza_Member" .. idx .. "_Level"]:SetText(guild_Roster[section][idx].lvl)
-        _G["LaFratellanza_Member" .. idx .. "_MainSpec"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx].class)
-        _G["LaFratellanza_Member" .. idx .. "_OffSpec"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx].class)
-        if(guild_Roster[section][idx].prof.main) then
-            _G["LaFratellanza_Member" .. idx .. "_MainProf"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx].prof.main)
-        end
-        if(guild_Roster[section][idx].prof.off) then
-            _G["LaFratellanza_Member" .. idx .. "_OffProf"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx].prof.off)
-        end
-        _G["LaFratellanza_Member" .. idx .. "_Zone"]:SetText(guild_Roster[section][idx].zone)
-        _G["LaFratellanza_Member" .. idx .. "_Rank"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\rank_]] .. ToLowerCase(Trim(guild_Roster[section][idx].rank)))
-
-        if idx == index then
-            item:SetPoint("TOP", 0, -60)
-        else
-            item:SetPoint("TOP", _G["LaFratellanza_Member" .. idx-1], "BOTTOM", 0, 0)
-        end
-    end
-end
-
-
-
-function LaFratellanza_MembersFrameInit(section)
+function LaFratellanza_MembersFrameInit()
     membersFrame = _G["LaFratellanza_Main_Frame_Members"]
     listLength = #guild_Roster[section]
 
@@ -326,19 +362,20 @@ function LaFratellanza_MembersFrameInit(section)
 
     if(listLength > 13) then
         LaFratellanza_ScrollBarInit(membersFrame)
-
-        local scrollChild = membersFrame.scrollFrame:GetScrollChild()
-        scrollChild:SetSize(1, listLength * 32)
     end
     
-    LaFratellanza_MemberListUpdate(section, 1)
+    LaFratellanza_MemberListInit()
 
 end
 
 
 function LaFratellanza_RosterInit()
+    local CVarValue = GetCVar("guildShowOffline")
     -- set a true della variabile config guildShowOffline (se è disattivata, getNumGuildMembers torna solo il numero di player online)
      SetCVar("guildShowOffline", 1)
+
+     guild_Roster["online"] = {}
+     guild_Roster["offline"] = {}
      local maxMembers = GetNumGuildMembers()
      if maxMembers == 0 then
         GuildRoster()
@@ -357,9 +394,9 @@ function LaFratellanza_RosterInit()
              end
          end
          _G["LaFratellanza_Main_Frame_Members_RosterStatus"]:SetText("Online: " .. #guild_Roster["online"] .. "/" .. #guild_Roster["online"]+#guild_Roster["offline"])
-         LaFratellanza_MembersFrameInit("online")
+         LaFratellanza_MembersFrameInit("offline")
      end
-     SetCVar("guildShowOffline", 0)
+     SetCVar("guildShowOffline", CVarValue)
  end
 
 
@@ -373,12 +410,9 @@ function LaFratellanza_OnEvent(self, event, arg1, arg2, arg3, arg4, arg5, arg6, 
 end
 
 mainButton:SetScript("OnClick", function()
-    if #guild_Roster["online"] == 0 then
-        GuildRoster()
-        LaFratellanza_RosterInit()
-    end
     if isMainFrameOpended == false then
         LaFratellanza_ShowMainFrame()
+        LaFratellanza_RosterInit()
     else
         LaFratellanza_CloseMainFrame()
     end

@@ -5,7 +5,7 @@ local guild_Roster = {
     online = {},
     offline = {},
 }
-local section = "offline"
+local section = "online"
 
 -- MEMBERS
 local listLength = 0
@@ -90,6 +90,10 @@ end
 
 function ToLowerCase(s)
     return s:lower()
+end
+
+function ToUpperCase(s)
+    return s:upper()
 end
 
 ----------------------------------------------------------------
@@ -246,17 +250,23 @@ end
 
 function LaFratellanza_ClearMemberRow()
     for idx = 1, 13 do
-        _G["LaFratellanza_Member" .. idx .. "_LaFratellanza_Member_Texture_Left"]:SetTexture(nil)
-        _G["LaFratellanza_Member" .. idx .. "_LaFratellanza_Member_Texture_Right"]:SetTexture(nil)
-        _G["LaFratellanza_Member" .. idx .. "_IconTexture"]:SetTexture(nil)
-        _G["LaFratellanza_Member" .. idx .. "_Voice"]:SetText(nil)
-        _G["LaFratellanza_Member" .. idx .. "_Level"]:SetText(nil)
-        _G["LaFratellanza_Member" .. idx .. "_MainSpec"]:SetTexture(nil)
-        _G["LaFratellanza_Member" .. idx .. "_OffSpec"]:SetTexture(nil)
-        _G["LaFratellanza_Member" .. idx .. "_MainProf"]:SetTexture(nil)
-        _G["LaFratellanza_Member" .. idx .. "_OffProf"]:SetTexture(nil)
-        _G["LaFratellanza_Member" .. idx .. "_Zone"]:SetText(nil)
-        _G["LaFratellanza_Member" .. idx .. "_Rank"]:SetTexture(nil)
+        _G["LaFratellanza_Member" .. idx .. "_Background_Texture_Left"]:SetTexture(nil)
+        _G["LaFratellanza_Member" .. idx .. "_Background_Texture_Right"]:SetTexture(nil)
+        _G["LaFratellanza_Member" .. idx .. "_ClassIcon_Texture"]:SetTexture(nil)
+        _G["LaFratellanza_Member" .. idx .. "_ClassIcon"]:SetScript("OnEnter", nil)
+        _G["LaFratellanza_Member" .. idx .. "_Name_Text"]:SetText(nil)
+        _G["LaFratellanza_Member" .. idx .. "_Level_Text"]:SetText(nil)
+        _G["LaFratellanza_Member" .. idx .. "_MainSpec_Texture"]:SetTexture(nil)
+        _G["LaFratellanza_Member" .. idx .. "_OffSpec_Texture"]:SetTexture(nil)
+        _G["LaFratellanza_Member" .. idx .. "_MainProf_Texture"]:SetTexture(nil)
+        _G["LaFratellanza_Member" .. idx .. "_OffProf_Texture"]:SetTexture(nil)
+        _G["LaFratellanza_Member" .. idx .. "_MainSpec"]:SetScript("OnEnter", nil)
+        _G["LaFratellanza_Member" .. idx .. "_OffSpec"]:SetScript("OnEnter", nil)
+        _G["LaFratellanza_Member" .. idx .. "_MainProf"]:SetScript("OnEnter", nil)
+        _G["LaFratellanza_Member" .. idx .. "_OffProf"]:SetScript("OnEnter", nil)
+        _G["LaFratellanza_Member" .. idx .. "_Zone_Text"]:SetText(nil)
+        _G["LaFratellanza_Member" .. idx .. "_Rank_Texture"]:SetTexture(nil)
+        _G["LaFratellanza_Member" .. idx .. "_Rank"]:SetScript("OnEnter", nil)
     end
 end
 
@@ -266,50 +276,122 @@ function LaFratellanza_MemberListUpdate(index)
   
     LaFratellanza_ClearMemberRow()
     for idx = 1, 13 do
+        if(guild_Roster[section][idx+index].name) then
+            local memberFrame = _G["LaFratellanza_Member" .. idx]
+            local memberTextureLeft = _G[memberFrame:GetName() .. "_Background_Texture_Left"]
+            local memberTextureRight = _G[memberFrame:GetName() .. "_Background_Texture_Right"]
+            memberTextureLeft:SetTexture([[Interface\AddOns\LaFratellanza\texture\frames\member-left]])
+            memberTextureRight:SetTexture([[Interface\AddOns\LaFratellanza\texture\frames\member-right]])
+            local background = _G[memberFrame:GetName() .. "_Background"]
 
-        local memberTextureLeft = _G["LaFratellanza_Member" .. idx .. "_LaFratellanza_Member_Texture_Left"]
-        local memberTextureRight = _G["LaFratellanza_Member" .. idx .. "_LaFratellanza_Member_Texture_Right"]
-        memberTextureLeft:SetTexture([[Interface\AddOns\LaFratellanza\texture\frames\member-left]])
-        memberTextureRight:SetTexture([[Interface\AddOns\LaFratellanza\texture\frames\member-right]])
+            background:EnableMouse(true)
 
-        if section == 'offline' then
-            memberTextureLeft:SetAlpha(0.5)
-            memberTextureRight:SetAlpha(0.5)
-        end
+            if section == 'offline' then
+                memberFrame:SetAlpha(0.6)
+            end
+
+            local classIcon = _G[memberFrame:GetName() .. "_ClassIcon"]
+            local classIconTexture = _G[memberFrame:GetName() .. "_ClassIcon_Texture"]
+            classIconTexture:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx+index].class)
+
+            classIcon:SetScript("OnEnter", function(self)
+                    GameTooltip:SetOwner(self, "ANCHOR_TOP")
+                    GameTooltip:SetText(guild_Roster[section][idx+index].class, 1, 1, 1, true)
+                    GameTooltip:Show()
+                end)
         
-        _G["LaFratellanza_Member" .. idx .. "_IconTexture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx+index].class)
+            classIcon:SetScript("OnLeave", function()
+                GameTooltip:Hide()
+            end)
 
-        local name = _G["LaFratellanza_Member" .. idx .. "_Voice"]
-        local lvl = _G["LaFratellanza_Member" .. idx .. "_Level"]
 
-        name:SetText(guild_Roster[section][idx+index].name)
-        lvl:SetText(guild_Roster[section][idx+index].lvl)
+            local name = _G[memberFrame:GetName() .. "_Name_Text"]
+            name:SetText(guild_Roster[section][idx+index].name)
 
-        if(guild_Roster[section][idx+index].spec.main) then
-            _G["LaFratellanza_Member" .. idx .. "_MainSpec"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx+index].spec.main .. guild_Roster[section][idx+index].class)
-        end
 
-        if(guild_Roster[section][idx+index].spec.off) then
-            _G["LaFratellanza_Member" .. idx .. "_OffSpec"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx+index].spec.off .. guild_Roster[section][idx+index].class)
-        end
+            local lvl = _G[memberFrame:GetName() .. "_Level_Text"]
+            lvl:SetText(guild_Roster[section][idx+index].lvl)
+
+            if(guild_Roster[section][idx+index].spec.main) then
+                local mainSpec = _G[memberFrame:GetName() .. "_MainSpec"]
+                _G[memberFrame:GetName() .. "_MainSpec_Texture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx+index].spec.main .. guild_Roster[section][idx+index].class)
+           
+                mainSpec:SetScript("OnEnter", function(self)
+                    GameTooltip:SetOwner(self, "ANCHOR_TOP")
+                    GameTooltip:SetText(ToUpperCase(guild_Roster[section][idx+index].spec.main), 1, 1, 1, true)
+                    GameTooltip:Show()
+                end)
         
-        if(guild_Roster[section][idx+index].prof.main) then
-            _G["LaFratellanza_Member" .. idx .. "_MainProf"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx+index].prof.main)
-        end
-        if(guild_Roster[section][idx+index].prof.off) then
-            _G["LaFratellanza_Member" .. idx .. "_OffProf"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx+index].prof.off)
-        end
+                mainSpec:SetScript("OnLeave", function()
+                    GameTooltip:Hide()
+                end)
+            end
 
-        local zone = _G["LaFratellanza_Member" .. idx .. "_Zone"]
-        zone:SetText(guild_Roster[section][idx+index].zone)
+            if(guild_Roster[section][idx+index].spec.off) then
+                local offSpec = _G[memberFrame:GetName() .. "_OffSpec"]
+                _G[memberFrame:GetName() .. "_OffSpec_Texture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx+index].spec.off .. guild_Roster[section][idx+index].class)
+                offSpec:SetScript("OnEnter", function(self)
+                    GameTooltip:SetOwner(self, "ANCHOR_TOP")
+                    GameTooltip:SetText(ToUpperCase(guild_Roster[section][idx+index].spec.off), 1, 1, 1, true)
+                    GameTooltip:Show()
+                end)
+        
+                offSpec:SetScript("OnLeave", function()
+                    GameTooltip:Hide()
+                end)
+            end
+            
+            if(guild_Roster[section][idx+index].prof.main) then
+                local mainProf = _G[memberFrame:GetName() .. "_MainProf"]
+                _G[memberFrame:GetName() .. "_MainProf_Texture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx+index].prof.main)
+                mainProf:SetScript("OnEnter", function(self)
+                    GameTooltip:SetOwner(self, "ANCHOR_TOP")
+                    GameTooltip:SetText(ToUpperCase(guild_Roster[section][idx+index].prof.main), 1, 1, 1, true)
+                    GameTooltip:Show()
+                end)
+        
+                mainProf:SetScript("OnLeave", function()
+                    GameTooltip:Hide()
+                end)
+            end
+            if(guild_Roster[section][idx+index].prof.off) then
+                local offProf = _G[memberFrame:GetName() .. "_OffProf"]
+                _G[memberFrame:GetName() .. "_OffProf_Texture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx+index].prof.off)
+                offProf:SetScript("OnEnter", function(self)
+                    GameTooltip:SetOwner(self, "ANCHOR_TOP")
+                    GameTooltip:SetText(ToUpperCase(guild_Roster[section][idx+index].prof.off), 1, 1, 1, true)
+                    GameTooltip:Show()
+                end)
+        
+                offProf:SetScript("OnLeave", function()
+                    GameTooltip:Hide()
+                end)
+            end
 
-        if section == 'offline' then
-            name:SetTextColor(0.5, 0.5, 0.5)
-            lvl:SetTextColor(0.5, 0.5, 0.5)
-            zone:SetTextColor(0.5, 0.5, 0.5)
+            local zone = _G[memberFrame:GetName() .. "_Zone_Text"]
+            zone:SetText(guild_Roster[section][idx+index].zone)
+
+            if section == 'offline' then
+                name:SetTextColor(0.5, 0.5, 0.5)
+                lvl:SetTextColor(0.5, 0.5, 0.5)
+                zone:SetTextColor(0.5, 0.5, 0.5)
+            end
+
+            local rank = _G[memberFrame:GetName() .. "_Rank"]
+            _G[memberFrame:GetName() .. "_Rank_Texture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\rank_]] .. ToLowerCase(Trim(guild_Roster[section][idx+index].rank)))
+
+            if(guild_Roster[section][idx+index].altOf) then
+                rank:SetScript("OnEnter", function(self)
+                    GameTooltip:SetOwner(self, "ANCHOR_TOP")
+                    GameTooltip:SetText(ToUpperCase(guild_Roster[section][idx+index].altOf), 1, 1, 1, true)
+                    GameTooltip:Show()
+                end)
+        
+                rank:SetScript("OnLeave", function()
+                    GameTooltip:Hide()
+                end)
+            end
         end
-
-        _G["LaFratellanza_Member" .. idx .. "_Rank"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\rank_]] .. ToLowerCase(Trim(guild_Roster[section][idx+index].rank)))
     end
 end
 

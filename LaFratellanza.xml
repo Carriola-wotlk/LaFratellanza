@@ -50,92 +50,175 @@
 				<Offset x="36" y="0"/>
 			</Anchor>
 		</Anchors>
+		<Frames>
 
-		<Layers>
-			<Layer level="BACKGROUND">
-				<Texture name="$parent_LaFratellanza_Member_Texture_Left">
-					<Anchors>
-						<Anchor point="LEFT"/>
-					</Anchors>
-				</Texture>
-				<Texture name="$parent_LaFratellanza_Member_Texture_Right">
-					<Anchors>
-						<Anchor point="RIGHT"/>
-					</Anchors>
-				</Texture>
-			</Layer>
-			<Layer level="OVERLAY">
-				<Texture name="$parent_IconTexture">
-					<Size x="32" y="32"/>
+			<Frame name="$parent_Background">
+				<Size x="640" y="32"/>
+				<Anchors>
+					<Anchor point="CENTER" />
+				</Anchors>
+
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture name="$parent_Texture_Left">
+							<Anchors>
+								<Anchor point="LEFT"/>
+							</Anchors>
+						</Texture>
+						<Texture name="$parent_Texture_Right">
+							<Anchors>
+								<Anchor point="RIGHT"/>
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+			</Frame>
+
+			<Button name="$parent_ClassIcon">
+				<Size x="32" y="32"/>
 					<Anchors>
 						<Anchor point="LEFT">
 							<Offset x="6" y="0"/>
 						</Anchor>
 					</Anchors>
-				</Texture>
-				<FontString name="$parent_Voice" parentKey="title" inherits="GameFontNormal" wraponspaces="false" justifyH="LEFT">
+				<NormalTexture name="$parent_Texture">
+					<Size>
+						<AbsDimension x="32" y="32"/>
+					</Size>
 					<Anchors>
-						<Anchor point="LEFT" relativePoint="LEFT" relativeTo="$parent_IconTexture">
-							<Offset x="40" y="0"/>
+						<Anchor point="CENTER" />
+					</Anchors>
+				</NormalTexture>
+			</Button>
+
+			<Button name="$parent_Name">
+				<Size x="90" y="30"/>
+					<Anchors>
+						<Anchor point="LEFT">
+							<Offset x="45" y="0"/>
 						</Anchor>
 					</Anchors>
-				</FontString>
-				<FontString name="$parent_Level" parentKey="title" inherits="GameFontNormal" wraponspaces="false" justifyH="LEFT">
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString name="$parent_Text" parentKey="title" inherits="GameFontNormal" wraponspaces="false" justifyH="LEFT" />
+					</Layer>
+				</Layers>
+			</Button>
+
+			<Button name="$parent_Level">
+				<Size x="30" y="30"/>
 					<Anchors>
-						<Anchor point="LEFT" relativePoint="LEFT" relativeTo="$parent_Voice">
-							<Offset x="115" y="0"/>
+						<Anchor point="LEFT">
+							<Offset x="140" y="0"/>
 						</Anchor>
 					</Anchors>
-				</FontString>
-				<Texture name="$parent_MainSpec">
-					<Size x="32" y="32"/>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString name="$parent_Text" parentKey="title" inherits="GameFontNormal" wraponspaces="false" justifyH="LEFT" />
+					</Layer>
+				</Layers>
+			</Button>
+
+			<Button name="$parent_MainSpec">
+				<Size x="32" y="32"/>
 					<Anchors>
-						<Anchor point="LEFT" relativePoint="LEFT" relativeTo="$parent_Level">
-							<Offset x="40" y="0"/>
+						<Anchor point="LEFT">
+							<Offset x="180" y="0"/>
 						</Anchor>
 					</Anchors>
-				</Texture>
-				<Texture name="$parent_OffSpec">
-					<Size x="32" y="32"/>
+				<NormalTexture name="$parent_Texture">
+					<Size>
+						<AbsDimension x="32" y="32"/>
+					</Size>
 					<Anchors>
-						<Anchor point="LEFT" relativePoint="LEFT" relativeTo="$parent_MainSpec">
-							<Offset x="30" y="0"/>
+						<Anchor point="CENTER" />
+					</Anchors>
+				</NormalTexture>
+			</Button>
+
+			<Button name="$parent_OffSpec">
+				<Size x="32" y="32"/>
+					<Anchors>
+						<Anchor point="LEFT">
+							<Offset x="212" y="0"/>
 						</Anchor>
 					</Anchors>
-				</Texture>
-				<Texture name="$parent_MainProf">
-					<Size x="32" y="32"/>
+				<NormalTexture name="$parent_Texture">
+					<Size>
+						<AbsDimension x="32" y="32"/>
+					</Size>
 					<Anchors>
-						<Anchor point="LEFT" relativePoint="LEFT" relativeTo="$parent_OffSpec">
-							<Offset x="50" y="0"/>
+						<Anchor point="CENTER" />
+					</Anchors>
+				</NormalTexture>
+			</Button>
+
+			<Button name="$parent_MainProf">
+				<Size x="32" y="32"/>
+					<Anchors>
+						<Anchor point="LEFT">
+							<Offset x="250" y="0"/>
 						</Anchor>
 					</Anchors>
-				</Texture>
-				<Texture name="$parent_OffProf">
-					<Size x="32" y="32"/>
+				<NormalTexture name="$parent_Texture">
+					<Size>
+						<AbsDimension x="32" y="32"/>
+					</Size>
 					<Anchors>
-						<Anchor point="LEFT" relativePoint="LEFT" relativeTo="$parent_MainProf">
-							<Offset x="30" y="0"/>
+						<Anchor point="CENTER" />
+					</Anchors>
+				</NormalTexture>
+			</Button>
+
+			<Button name="$parent_OffProf">
+				<Size x="32" y="32"/>
+					<Anchors>
+						<Anchor point="LEFT">
+							<Offset x="282" y="0"/>
 						</Anchor>
 					</Anchors>
-				</Texture>
-				<FontString name="$parent_Zone" parentKey="title" inherits="GameFontNormal" wraponspaces="false" justifyH="LEFT">
+				<NormalTexture name="$parent_Texture">
+					<Size>
+						<AbsDimension x="32" y="32"/>
+					</Size>
 					<Anchors>
-						<Anchor point="LEFT" relativePoint="LEFT" relativeTo="$parent_OffProf">
-							<Offset x="50" y="0"/>
+						<Anchor point="CENTER" />
+					</Anchors>
+				</NormalTexture>
+			</Button>
+
+			<Button name="$parent_Zone">
+				<Size x="150" y="30"/>
+					<Anchors>
+						<Anchor point="LEFT">
+							<Offset x="340" y="0"/>
 						</Anchor>
 					</Anchors>
-				</FontString>
-				<Texture name="$parent_Rank">
-					<Size x="64" y="32"/>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString name="$parent_Text" parentKey="title" inherits="GameFontNormal" wraponspaces="false" justifyH="LEFT" />
+					</Layer>
+				</Layers>
+			</Button>
+
+			<Button name="$parent_Rank">
+				<Size x="64" y="32"/>
 					<Anchors>
-						<Anchor point="LEFT" relativePoint="LEFT" relativeTo="$parent_Zone">
-							<Offset x="200" y="0"/>
+						<Anchor point="LEFT">
+							<Offset x="570" y="0"/>
 						</Anchor>
 					</Anchors>
-				</Texture>
-			</Layer>
-		</Layers>
+				<NormalTexture name="$parent_Texture">
+					<Size>
+						<AbsDimension x="64" y="32"/>
+					</Size>
+					<Anchors>
+						<Anchor point="CENTER" />
+					</Anchors>
+				</NormalTexture>
+			</Button>
+
+		</Frames>
 
 	</Frame>
 

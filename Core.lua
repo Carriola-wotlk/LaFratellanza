@@ -288,6 +288,8 @@ function LaFratellanza_MemberListUpdate(index)
 
             if section == 'offline' then
                 memberFrame:SetAlpha(0.6)
+            else
+                memberFrame:SetAlpha(1)
             end
 
             local classIcon = _G[memberFrame:GetName() .. "_ClassIcon"]
@@ -372,9 +374,13 @@ function LaFratellanza_MemberListUpdate(index)
             zone:SetText(guild_Roster[section][idx+index].zone)
 
             if section == 'offline' then
-                name:SetTextColor(0.5, 0.5, 0.5)
-                lvl:SetTextColor(0.5, 0.5, 0.5)
-                zone:SetTextColor(0.5, 0.5, 0.5)
+                    name:SetTextColor(0.5, 0.5, 0.5)
+                    lvl:SetTextColor(0.5, 0.5, 0.5)
+                    zone:SetTextColor(0.5, 0.5, 0.5)
+            else
+                    name:SetTextColor(1, 1, 0)
+                    lvl:SetTextColor(1, 1, 0)
+                    zone:SetTextColor(1, 1, 0)
             end
 
             local rank = _G[memberFrame:GetName() .. "_Rank"]
@@ -411,10 +417,9 @@ end
 
 
 
-function LaFratellanza_ScrollBarInit()
+function LaFratellanza_ScrollBarInit(listLength)
     local scrollFrame = CreateFrame("ScrollFrame", "LaFratellanza_Main_Frame_Members_ScrollFrame", membersFrame, "UIPanelScrollFrameTemplate")
     local slider = CreateFrame("Slider", "LaFratellanza_Main_Frame_Members_Slider", scrollFrame, "OptionsSliderTemplate")
-
     membersFrame.scrollFrame = scrollFrame
     membersFrame.slider = slider
 
@@ -435,7 +440,7 @@ function LaFratellanza_ScrollBarInit()
     local scrollChild = CreateFrame("Frame", "LaFratellanza_Main_Frame_Members_ScrollChild", scrollFrame)
 
     local minValue = 1
-    local maxValue = (listLength*32) + 160
+    local maxValue = (listLength*32)+160
     scrollChild:SetSize(665, maxValue)
     scrollChild:SetPoint("RIGHT", membersFrame, "LEFT", 0, 0)
     scrollFrame:SetScrollChild(scrollChild)
@@ -456,13 +461,16 @@ end
 
 
 function LaFratellanza_MembersFrameInit()
-    membersFrame = _G["LaFratellanza_Main_Frame_Members"]
+    
     listLength = #guild_Roster[section]
+
+    
+    print("listLength    ->" .. listLength)
 
     membersFrame:Show()
 
     if(listLength > 13) then
-        LaFratellanza_ScrollBarInit()
+        LaFratellanza_ScrollBarInit(listLength)
     end
     
     LaFratellanza_MemberListInit()
@@ -474,13 +482,11 @@ function LaFratellanza_RosterInit()
     local CVarValue = GetCVar("guildShowOffline")
     -- set a true della variabile config guildShowOffline (se è disattivata, getNumGuildMembers torna solo il numero di player online)
      SetCVar("guildShowOffline", 1)
-
+     GuildRoster()
      guild_Roster["online"] = {}
      guild_Roster["offline"] = {}
      local maxMembers = GetNumGuildMembers()
-     if maxMembers == 0 then
-        GuildRoster()
-     end
+     membersFrame = _G["LaFratellanza_Main_Frame_Members"]
 
      maxMembers = GetNumGuildMembers()
      if maxMembers ~= nil then
@@ -495,20 +501,11 @@ function LaFratellanza_RosterInit()
              end
          end
          _G["LaFratellanza_Main_Frame_Members_RosterStatus"]:SetText("Online: " .. #guild_Roster["online"] .. "/" .. #guild_Roster["online"]+#guild_Roster["offline"])
-         LaFratellanza_MembersFrameInit("offline")
+         LaFratellanza_MembersFrameInit()
      end
      SetCVar("guildShowOffline", CVarValue)
  end
 
-
-
-
-
-function LaFratellanza_OnEvent(self, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11)
-    if event == "PLAYER_ENTERING_WORLD" then
-        --LaFratellanza_RosterInit()
-    end
-end
 
 mainButton:SetScript("OnClick", function()
     if isMainFrameOpended == false then
@@ -519,6 +516,39 @@ mainButton:SetScript("OnClick", function()
     end
 end)
 
+
+local previousSelection = "Online"
+
+function LaFratellanza_InitDropDown(self, level, menuList)
+    local info = UIDropDownMenu_CreateInfo()
+
+    info.func = LaFratellanza_DropDownOnClick
+
+    if level == 1 then
+        info.text = "Online"
+        info.value = "Online"
+        UIDropDownMenu_AddButton(info)
+
+        info.text = "Offline"
+        info.value = "Offline"
+        UIDropDownMenu_AddButton(info)
+    end
+end
+
+function LaFratellanza_DropDownOnClick(self, arg1, arg2, checked)
+    if self.value ~= previousSelection then
+        previousSelection = self.value
+
+        local dropDownButton = _G["LaFratellanza_DropDownButton"]
+        UIDropDownMenu_SetText(dropDownButton, self.value)
+
+        section = ToLowerCase(self.value)
+        LaFratellanza_MembersFrameInit()
+    end
+
+end
+
+
+
 LaFratellanza:RegisterEvent("GUILD_ROSTER_UPDATE")
 LaFratellanza:RegisterEvent("PLAYER_ENTERING_WORLD")
-LaFratellanza:SetScript("OnEvent", LaFratellanza_OnEvent)

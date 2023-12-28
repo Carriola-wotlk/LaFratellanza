@@ -280,6 +280,25 @@
 				</Scripts>
 			</Button>
 
+			<Button name="LaFratellanza_DropDownButton" inherits="UIDropDownMenuTemplate">
+            <Anchors>
+                <Anchor point="TOPRIGHT">
+                    <Offset>
+                        <AbsDimension x="-28" y="-3"/>
+                    </Offset>
+                </Anchor>
+            </Anchors>
+            <Size>
+                <AbsDimension x="150" y="30"/>
+            </Size>
+            <Scripts>
+                <OnLoad>
+                    UIDropDownMenu_Initialize(self, LaFratellanza_InitDropDown)
+                    UIDropDownMenu_SetText(self, "Online")
+                </OnLoad>
+            </Scripts>
+        </Button>
+
 			<Frame name="LaFratellanza_Main_Frame_Members" hidden="true">
 				<Size x="768" y="512"/>
 				<Anchors>

@@ -53,12 +53,12 @@
 
 		<Layers>
 			<Layer level="BACKGROUND">
-				<Texture name="LaFratellanza_Member_Texture" file="Interface\AddOns\LaFratellanza\texture\frames\member-left">
+				<Texture name="$parent_LaFratellanza_Member_Texture_Left">
 					<Anchors>
 						<Anchor point="LEFT"/>
 					</Anchors>
 				</Texture>
-				<Texture name="LaFratellanza_Member_Texture" file="Interface\AddOns\LaFratellanza\texture\frames\member-right">
+				<Texture name="$parent_LaFratellanza_Member_Texture_Right">
 					<Anchors>
 						<Anchor point="RIGHT"/>
 					</Anchors>

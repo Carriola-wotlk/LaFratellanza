@@ -5,7 +5,7 @@ local guild_Roster = {
     online = {},
     offline = {},
 }
-local section = "online"
+local section = "offline"
 
 -- MEMBERS
 local listLength = 0
@@ -21,6 +21,7 @@ local profTable = {
     enc = "Enchanting",
     eng = "Engineering",
     her = "Herbalism",
+    erb = "Herbalism",
     ins = "Inscription",
     jew = "Jewelcrafting",
     jc = "Jewelcrafting",
@@ -243,28 +244,46 @@ function LaFratellanza_GetMemberProps(name, rank, lvl, cl, zone, note, offNote, 
 end
 
 
-function LaFratellanza_ClearMemberRow(idx)
-    _G["LaFratellanza_Member" .. idx .. "_IconTexture"]:SetTexture(nil)
-    _G["LaFratellanza_Member" .. idx .. "_Voice"]:SetText(nil)
-    _G["LaFratellanza_Member" .. idx .. "_Level"]:SetText(nil)
-    _G["LaFratellanza_Member" .. idx .. "_MainSpec"]:SetTexture(nil)
-    _G["LaFratellanza_Member" .. idx .. "_OffSpec"]:SetTexture(nil)
-    _G["LaFratellanza_Member" .. idx .. "_MainProf"]:SetTexture(nil)
-    _G["LaFratellanza_Member" .. idx .. "_OffProf"]:SetTexture(nil)
-    _G["LaFratellanza_Member" .. idx .. "_Zone"]:SetText(nil)
-    _G["LaFratellanza_Member" .. idx .. "_Rank"]:SetTexture(nil)
+function LaFratellanza_ClearMemberRow()
+    for idx = 1, 13 do
+        _G["LaFratellanza_Member" .. idx .. "_LaFratellanza_Member_Texture_Left"]:SetTexture(nil)
+        _G["LaFratellanza_Member" .. idx .. "_LaFratellanza_Member_Texture_Right"]:SetTexture(nil)
+        _G["LaFratellanza_Member" .. idx .. "_IconTexture"]:SetTexture(nil)
+        _G["LaFratellanza_Member" .. idx .. "_Voice"]:SetText(nil)
+        _G["LaFratellanza_Member" .. idx .. "_Level"]:SetText(nil)
+        _G["LaFratellanza_Member" .. idx .. "_MainSpec"]:SetTexture(nil)
+        _G["LaFratellanza_Member" .. idx .. "_OffSpec"]:SetTexture(nil)
+        _G["LaFratellanza_Member" .. idx .. "_MainProf"]:SetTexture(nil)
+        _G["LaFratellanza_Member" .. idx .. "_OffProf"]:SetTexture(nil)
+        _G["LaFratellanza_Member" .. idx .. "_Zone"]:SetText(nil)
+        _G["LaFratellanza_Member" .. idx .. "_Rank"]:SetTexture(nil)
+    end
 end
 
 
 function LaFratellanza_MemberListUpdate(index)
     print("index ----->", index)
   
+    LaFratellanza_ClearMemberRow()
     for idx = 1, 13 do
-        LaFratellanza_ClearMemberRow(idx)
-   
+
+        local memberTextureLeft = _G["LaFratellanza_Member" .. idx .. "_LaFratellanza_Member_Texture_Left"]
+        local memberTextureRight = _G["LaFratellanza_Member" .. idx .. "_LaFratellanza_Member_Texture_Right"]
+        memberTextureLeft:SetTexture([[Interface\AddOns\LaFratellanza\texture\frames\member-left]])
+        memberTextureRight:SetTexture([[Interface\AddOns\LaFratellanza\texture\frames\member-right]])
+
+        if section == 'offline' then
+            memberTextureLeft:SetAlpha(0.5)
+            memberTextureRight:SetAlpha(0.5)
+        end
+        
         _G["LaFratellanza_Member" .. idx .. "_IconTexture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx+index].class)
-        _G["LaFratellanza_Member" .. idx .. "_Voice"]:SetText(guild_Roster[section][idx+index].name)
-        _G["LaFratellanza_Member" .. idx .. "_Level"]:SetText(guild_Roster[section][idx+index].lvl)
+
+        local name = _G["LaFratellanza_Member" .. idx .. "_Voice"]
+        local lvl = _G["LaFratellanza_Member" .. idx .. "_Level"]
+
+        name:SetText(guild_Roster[section][idx+index].name)
+        lvl:SetText(guild_Roster[section][idx+index].lvl)
 
         if(guild_Roster[section][idx+index].spec.main) then
             _G["LaFratellanza_Member" .. idx .. "_MainSpec"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx+index].spec.main .. guild_Roster[section][idx+index].class)
@@ -280,7 +299,16 @@ function LaFratellanza_MemberListUpdate(index)
         if(guild_Roster[section][idx+index].prof.off) then
             _G["LaFratellanza_Member" .. idx .. "_OffProf"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx+index].prof.off)
         end
-        _G["LaFratellanza_Member" .. idx .. "_Zone"]:SetText(guild_Roster[section][idx+index].zone)
+
+        local zone = _G["LaFratellanza_Member" .. idx .. "_Zone"]
+        zone:SetText(guild_Roster[section][idx+index].zone)
+
+        if section == 'offline' then
+            name:SetTextColor(0.5, 0.5, 0.5)
+            lvl:SetTextColor(0.5, 0.5, 0.5)
+            zone:SetTextColor(0.5, 0.5, 0.5)
+        end
+
         _G["LaFratellanza_Member" .. idx .. "_Rank"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\rank_]] .. ToLowerCase(Trim(guild_Roster[section][idx+index].rank)))
     end
 end
@@ -301,15 +329,15 @@ end
 
 
 
-function LaFratellanza_ScrollBarInit(membersFrame)
+function LaFratellanza_ScrollBarInit()
     local scrollFrame = CreateFrame("ScrollFrame", "LaFratellanza_Main_Frame_Members_ScrollFrame", membersFrame, "UIPanelScrollFrameTemplate")
     local slider = CreateFrame("Slider", "LaFratellanza_Main_Frame_Members_Slider", scrollFrame, "OptionsSliderTemplate")
 
     membersFrame.scrollFrame = scrollFrame
     membersFrame.slider = slider
 
-    scrollFrame:SetPoint("LEFT", membersFrame, "RIGHT", -108, -10)
-    scrollFrame:SetSize(25, 430)
+    scrollFrame:SetPoint("CENTER", membersFrame, "CENTER", -26, -10)
+    scrollFrame:SetSize(655, 430)
     scrollFrame:EnableMouseWheel(true)
 
     slider:SetSize(25, 445)
@@ -317,39 +345,30 @@ function LaFratellanza_ScrollBarInit(membersFrame)
     slider:SetBackdrop({
         edgeFile = "Interface\\Buttons\\UI-SliderBar-Border",
         bgFile = "Interface\\Buttons\\UI-SliderBar-Background",
-        tile = true,
         edgeSize = 8,
-        tileSize = 8,
         insets = { left = 3, right = 3, top = 6, bottom = 6 },
     })
-
+    _G[slider:GetName() .. 'Low']:SetText('')
+    _G[slider:GetName() .. 'High']:SetText('')
     local scrollChild = CreateFrame("Frame", "LaFratellanza_Main_Frame_Members_ScrollChild", scrollFrame)
 
     local minValue = 1
-    local maxValue = listLength*32
-    scrollChild:SetSize(minValue, maxValue)
+    local maxValue = (listLength*32) + 160
+    scrollChild:SetSize(665, maxValue)
+    scrollChild:SetPoint("RIGHT", membersFrame, "LEFT", 0, 0)
     scrollFrame:SetScrollChild(scrollChild)
 
     local stepSize = 5 * 32
 
-    slider:SetValue(1)
-    slider:SetMinMaxValues(1, (listLength * 32)-(13*32))
-    slider:SetValueStep(1.0)
-
     scrollFrame:SetScript("OnVerticalScroll", function(self, value)
-        local newValue = math.floor(value / stepSize + 0.5) * stepSize
-        
-        if(newValue < 160) then
-            newValue = 160
+        local newValue = math.max(160, math.floor(value / stepSize + 0.5) * stepSize)
+        newValue = math.min(maxValue, math.max(minValue, newValue))
+ 
+        if(value == 0) then
+            LaFratellanza_MemberListUpdate(0)
+        else
+            LaFratellanza_MemberListUpdate(newValue / 32)
         end
-
-        if newValue < minValue then
-            newValue = minValue
-        elseif newValue > maxValue then
-            newValue = maxValue
-        end
-        print(value)
-        LaFratellanza_MemberListUpdate((newValue/32))
     end)
 end
 
@@ -361,7 +380,7 @@ function LaFratellanza_MembersFrameInit()
     membersFrame:Show()
 
     if(listLength > 13) then
-        LaFratellanza_ScrollBarInit(membersFrame)
+        LaFratellanza_ScrollBarInit()
     end
     
     LaFratellanza_MemberListInit()

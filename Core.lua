@@ -1,6 +1,7 @@
 local navBar = {"membri", "regolamento", "chat", "stats"};
 local isMainFrameOpended = false;
 local LaFratellanza = CreateFrame("Frame");
+local guild_Roster_Names = {}
 local guild_Roster = {
     online = {},
     offline = {},
@@ -17,65 +18,114 @@ local slider;
 local scrollChild;
 
 local profTable = {
-    ski = "Skinning",
+    skin = "Skinning",
+    skinning = "Skinning",
+    alchemy = "Alchemy",
     alc = "Alchemy",
     alk = "Alchemy",
+    alch = "Alchemy",
     ak = "Alchemy",
+
+    blacksmithing = "Blacksmithing",
     bla = "Blacksmithing",
     bs = "Blacksmithing",
+
+    enchanting = "Enchanting",
     enc = "Enchanting",
+    ench = "Enchanting",
+
+    engineering = "Engineering",
     eng = "Engineering",
+    engi = "Engineering",
+    engineer = "Engineering",
+
+    herbalism = "Herbalism",
+    herb = "Herbalism",
     her = "Herbalism",
+    erba = "Herbalism",
     erb = "Herbalism",
+
+    inscription = "Inscription",
+    inscript = "Inscription",
+    inscr = "Inscription",
+    insc = "Inscription",
     ins = "Inscription",
+
+    jewelcrafting = "Jewelcrafting",
+    jewel = "Jewelcrafting",
     jew = "Jewelcrafting",
     jc = "Jewelcrafting",
     jw = "Jewelcrafting",
+
+    leatherworking = "Leatherworking",
+    leath = "Leatherworking",
     let = "Leatherworking",
     lw = "Leatherworking",
+
+    mining = "Mining",
+    minatore = "Mining",
     min = "Mining",
+
+    tailoring = "Tailoring",
+    tailor = "Tailoring",
     tai = "Tailoring",
-    fis = "Fishing",
-    coo = "Cooking",
 };
 
 local specTable = {
+    healer = "Healer",
+    tank = "Tank",
+
     unh = "Unholy",
-    fro = "Frost",
-    blo = "Blood",
+    unholy = "Unholy",
+    frost = "Frost",
+    blood = "Blood",
 
-    res = "Restoration",
-    fer = "Feral",
-    bal = "Balance",
+    resto = "Restoration",
+    restoration = "Restoration",
+    feral = "Feral",
+    balance = "Balance",
+    pollo = "Balance",
+    guardian = "Guardian",
 
-    bea = "BeastMastery",
+    beastMastery = "BeastMastery",
     bm = "BeastMastery",
-    mar = "Marksmanship",
+    marksmanship = "Marksmanship",
     mm = "Marksmanship",
-    sur = "Survival",
+    survival = "Survival",
 
-    aff = "Affliction",
-    des = "Destruction",
-    dem = "Demonology",
+    affliction = "Affliction",
+    affly = "Affliction",
+    affli = "Affliction",
+    destruction = "Destruction",
+    destro = "Destruction",
+    demonology = "Demonology",
+    demo = "Demonology",
 
-    sha = "Shadow",
-    dis = "Discipline",
-    hol = "Holy",
+    shadow = "Shadow",
+    discipline = "Discipline",
+    disci = "Discipline",
+    holy = "Holy",
 
-    fir ="Fire",
-    arc = "Arcane",
+    fire ="Fire",
+    arcane = "Arcane",
 
-    pro = "Protection",
-    fur = "Fury",
-    arm = "Arms",
+    protection = "Protection",
+    prot = "Protection",
+    fury = "Fury",
+    arms = "Arms",
 
-    ret = "Retribution",
+    retribution = "Retribution",
+    retri = "Retribution",
 
-    com = "Combat",
+    combat = "Combat",
+    assassination = "Assassination",
     ass = "Assassination",
+    subtlety = "Subtlety",
     sub = "Subtlety",
 
+    elemental = "Elemental",
     ele = "Elemental",
+    enha = "Enhancement",
     enh = "Enhancement",
     ena = "Enhancement",
 };
@@ -181,28 +231,22 @@ function LaFratellanza_DecodeNote(elements, result, name)
         elseif element == "alt" then
             result.isAlt = true;
         else
-            local temp = element;
-
-            if #temp > 3 then
-                temp = string.sub(temp, 1, 3);
-            end
-
-            if profTable[temp] ~= nil then
+            if profTable[element] ~= nil then
                 if indexProf == 1 then
-                    result["prof"].main = profTable[temp];
+                    result["prof"].main = profTable[element];
                     indexProf = 2;
                 elseif indexProf == 2 then
-                    result["prof"].off = profTable[temp];
+                    result["prof"].off = profTable[element];
                 end
-            elseif specTable[temp] ~= nil then
+            elseif specTable[element] ~= nil then
                 if indexSpec == 1 then
-                    result["spec"].main = specTable[temp];
+                    result["spec"].main = specTable[element];
                     indexSpec = 2;
                 elseif indexSpec == 2 then
-                    result["spec"].off = specTable[temp];
+                    result["spec"].off = specTable[element];
                 end
-            elseif result.isAlt then
-                result.altOf = element;
+            elseif guild_Roster_Names[element] then
+                result.altOf = string.upper(element);
             end
         end
 
@@ -232,6 +276,7 @@ end
 
 function LaFratellanza_ClearMemberRow()
     for idx = 1, 13 do
+        _G["LaFratellanza_Member" .. idx]:SetScript("OnMouseDown", nil);
         _G["LaFratellanza_Member" .. idx .. "_Background_Texture_Left"]:SetTexture(nil);
         _G["LaFratellanza_Member" .. idx .. "_Background_Texture_Right"]:SetTexture(nil);
         _G["LaFratellanza_Member" .. idx .. "_ClassIcon_Texture"]:SetTexture(nil);
@@ -241,14 +286,6 @@ function LaFratellanza_ClearMemberRow()
         _G["LaFratellanza_Member" .. idx .. "_OffSpec_Texture"]:SetTexture(nil);
         _G["LaFratellanza_Member" .. idx .. "_MainProf_Texture"]:SetTexture(nil);
         _G["LaFratellanza_Member" .. idx .. "_OffProf_Texture"]:SetTexture(nil);
-        _G["LaFratellanza_Member" .. idx .. "_MainSpec"]:SetScript("OnEnter", nil);
-        _G["LaFratellanza_Member" .. idx .. "_MainSpec"]:SetScript("OnLeave", nil);
-        _G["LaFratellanza_Member" .. idx .. "_OffSpec"]:SetScript("OnEnter", nil);
-        _G["LaFratellanza_Member" .. idx .. "_OffSpec"]:SetScript("OnLeave", nil);
-        _G["LaFratellanza_Member" .. idx .. "_MainProf"]:SetScript("OnEnter", nil);
-        _G["LaFratellanza_Member" .. idx .. "_MainProf"]:SetScript("OnLeave", nil);
-        _G["LaFratellanza_Member" .. idx .. "_OffProf"]:SetScript("OnEnter", nil);
-        _G["LaFratellanza_Member" .. idx .. "_OffProf"]:SetScript("OnLeave", nil);
         _G["LaFratellanza_Member" .. idx .. "_Zone_Text"]:SetText(nil);
         _G["LaFratellanza_Member" .. idx .. "_Rank_Texture"]:SetTexture(nil);
         _G["LaFratellanza_Member" .. idx .. "_Rank"]:SetScript("OnEnter", nil);
@@ -256,22 +293,62 @@ function LaFratellanza_ClearMemberRow()
     end
 end
 
+function ShowContextMenu(memberFrame, memberIndex, button)
+    local playerName = guild_Roster[section][memberIndex].name;
+
+    local menuFrame = CreateFrame("Frame", "MyAddonContextMenu", UIParent, "UIDropDownMenuTemplate");
+
+    print("1");
+
+    local function AddMenuItem(text, func)
+        local info = {};
+        info.text = text;
+        info.func = func;
+        UIDropDownMenu_AddButton(info);
+    end
+
+    print("2");
+
+    AddMenuItem("Whisper", function()
+        ChatFrame_SendTell(playerName);
+    end)
+
+    print("3");
+
+    AddMenuItem("Invite to Group", function()
+        InviteUnit(playerName);
+    end)
+
+    print("4");
+
+    UIDropDownMenu_Initialize(menuFrame, function(self, level)
+        for i = 1, #self.menuList do
+            local info = UIDropDownMenu_CreateInfo();
+            info.text = self.menuList[i].text;
+            info.func = self.menuList[i].func;
+            UIDropDownMenu_AddButton(info, level);
+        end
+    end)
+
+    print("5");
+
+    EasyMenu(menuFrame, UIParent, "cursor", 0, 0, "MENU", 1);
+
+    print("6");
+end
+
+
 function LaFratellanza_MemberListUpdate(index)
-    print("index ----->", index);
   
     LaFratellanza_ClearMemberRow()
     for idx = 1, 13 do
         if(guild_Roster[section][idx+index].name) then
             local memberFrame = _G["LaFratellanza_Member" .. idx];
-           
+            
             if section == 'online' then
                 _G["LaFratellanza_Member" .. idx .. "_Background_Texture_Left"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\frames\member-left]]);
                 _G["LaFratellanza_Member" .. idx .. "_Background_Texture_Right"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\frames\member-right]]);
             end
-
-            local background = _G[memberFrame:GetName() .. "_Background"];
-
-            background:EnableMouse(true);
 
             if section == 'offline' then
                 memberFrame:SetAlpha(0.6);
@@ -279,23 +356,13 @@ function LaFratellanza_MemberListUpdate(index)
                 memberFrame:SetAlpha(1);
             end
 
-  
+            if(guild_Roster[section][idx+index].name == "Danko") then
+                print( guild_Roster[section][idx+index].spec.main .. guild_Roster[section][idx+index].class)
+            end
+
             local classIconTexture = _G[memberFrame:GetName() .. "_ClassIcon_Texture"];
             classIconTexture:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx+index].class);
-            local classIcon = _G[memberFrame:GetName() .. "_ClassIcon"];
-            classIcon:SetScript("OnEnter", function(self)
-                print("OnEnter: " .. guild_Roster[section][idx+index].class)
-                    GameTooltip:SetOwner(self, "ANCHOR_TOP");
-                    GameTooltip:SetText(guild_Roster[section][idx+index].class, 1, 1, 1, true);
-                    GameTooltip:Show();
-                end)
-        
-            classIcon:SetScript("OnLeave", function()
-                print("OnLeave: " .. guild_Roster[section][idx+index].class)
-                GameTooltip:Hide();
-            end)
-
-
+           
             local name = _G[memberFrame:GetName() .. "_Name_Text"];
             name:SetText(guild_Roster[section][idx+index].name);
 
@@ -304,60 +371,19 @@ function LaFratellanza_MemberListUpdate(index)
             lvl:SetText(guild_Roster[section][idx+index].lvl);
 
             if(guild_Roster[section][idx+index].spec.main) then
-                local mainSpec = _G[memberFrame:GetName() .. "_MainSpec"];
                 _G[memberFrame:GetName() .. "_MainSpec_Texture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx+index].spec.main .. guild_Roster[section][idx+index].class);
-           
-                mainSpec:SetScript("OnEnter", function(self)
-                    GameTooltip:SetOwner(self, "ANCHOR_TOP");
-                    GameTooltip:SetText(ToUpperCase(guild_Roster[section][idx+index].spec.main), 1, 1, 1, true);
-                    GameTooltip:Show();
-                end)
-        
-                mainSpec:SetScript("OnLeave", function()
-                    GameTooltip:Hide();
-                end)
             end
 
             if(guild_Roster[section][idx+index].spec.off) then
-                local offSpec = _G[memberFrame:GetName() .. "_OffSpec"];
                 _G[memberFrame:GetName() .. "_OffSpec_Texture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx+index].spec.off .. guild_Roster[section][idx+index].class);
-                offSpec:SetScript("OnEnter", function(self)
-                    GameTooltip:SetOwner(self, "ANCHOR_TOP");
-                    GameTooltip:SetText(ToUpperCase(guild_Roster[section][idx+index].spec.off), 1, 1, 1, true);
-                    GameTooltip:Show();
-                end)
-        
-                offSpec:SetScript("OnLeave", function()
-                    GameTooltip:Hide();
-                end)
             end
             
             if(guild_Roster[section][idx+index].prof.main) then
-                local mainProf = _G[memberFrame:GetName() .. "_MainProf"];
                 _G[memberFrame:GetName() .. "_MainProf_Texture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx+index].prof.main);
-                mainProf:SetScript("OnEnter", function(self)
-                    GameTooltip:SetOwner(self, "ANCHOR_TOP");
-                    GameTooltip:SetText(ToUpperCase(guild_Roster[section][idx+index].prof.main), 1, 1, 1, true);
-                    GameTooltip:Show();
-                end)
-        
-                mainProf:SetScript("OnLeave", function()
-                    GameTooltip:Hide();
-                end)
             end
 
             if(guild_Roster[section][idx+index].prof.off) then
-                local offProf = _G[memberFrame:GetName() .. "_OffProf"];
                 _G[memberFrame:GetName() .. "_OffProf_Texture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx+index].prof.off);
-                offProf:SetScript("OnEnter", function(self)
-                    GameTooltip:SetOwner(self, "ANCHOR_TOP");
-                    GameTooltip:SetText(ToUpperCase(guild_Roster[section][idx+index].prof.off), 1, 1, 1, true);
-                    GameTooltip:Show();
-                end)
-        
-                offProf:SetScript("OnLeave", function()
-                    GameTooltip:Hide();
-                end)
             end
 
             local zone = _G[memberFrame:GetName() .. "_Zone_Text"];
@@ -468,6 +494,14 @@ function LaFratellanza_MembersFrameInit()
     
 end
 
+function LaFratellanza_BuildArrayOfName(maxMembers)
+    for i = 1, maxMembers do
+        local name = GetGuildRosterInfo(i);
+        if name ~= nil then
+            guild_Roster_Names[string.lower(name)] = true
+        end
+    end
+end
 
 function LaFratellanza_RosterInit()
     local CVarValue = GetCVar("guildShowOffline")
@@ -481,6 +515,7 @@ function LaFratellanza_RosterInit()
 
      maxMembers = GetNumGuildMembers();
      if maxMembers ~= nil then
+        LaFratellanza_BuildArrayOfName(maxMembers)
          for i = 1, maxMembers do
              local name, rank, _, lvl, cl, zone, note, offNote, online, status, class = GetGuildRosterInfo(i);
              if name ~= nil then
@@ -566,3 +601,13 @@ end
 
 LaFratellanza:RegisterEvent("GUILD_ROSTER_UPDATE");
 LaFratellanza:RegisterEvent("PLAYER_ENTERING_WORLD");
+
+LaFratellanza:SetScript("OnEvent", function(self, event, ...)
+    if event == "GUILD_ROSTER_UPDATE" then
+
+    end
+
+    if event == "PLAYER_ENTERING_WORLD" then
+
+    end
+end)

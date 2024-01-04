@@ -6,7 +6,10 @@ local guild_Roster = {
     online = {},
     offline = {},
 };
+local guild_Roster_Filtered = {}
 local section = "online";
+local profFilter = "All professions";
+local specFilter = "All specs";
 
 local isFirstOpen = true;
 
@@ -20,6 +23,7 @@ local scrollChild;
 local profTable = {
     skin = "Skinning",
     skinning = "Skinning",
+
     alchemy = "Alchemy",
     alc = "Alchemy",
     alk = "Alchemy",
@@ -68,6 +72,7 @@ local profTable = {
 
     tailoring = "Tailoring",
     tailor = "Tailoring",
+    tail = "Tailoring",
     tai = "Tailoring",
 };
 
@@ -102,6 +107,7 @@ local specTable = {
     demo = "Demonology",
 
     shadow = "Shadow",
+    sp = "Shadow",
     discipline = "Discipline",
     disci = "Discipline",
     holy = "Holy",
@@ -293,56 +299,11 @@ function LaFratellanza_ClearMemberRow()
     end
 end
 
-function ShowContextMenu(memberFrame, memberIndex, button)
-    local playerName = guild_Roster[section][memberIndex].name;
-
-    local menuFrame = CreateFrame("Frame", "MyAddonContextMenu", UIParent, "UIDropDownMenuTemplate");
-
-    print("1");
-
-    local function AddMenuItem(text, func)
-        local info = {};
-        info.text = text;
-        info.func = func;
-        UIDropDownMenu_AddButton(info);
-    end
-
-    print("2");
-
-    AddMenuItem("Whisper", function()
-        ChatFrame_SendTell(playerName);
-    end)
-
-    print("3");
-
-    AddMenuItem("Invite to Group", function()
-        InviteUnit(playerName);
-    end)
-
-    print("4");
-
-    UIDropDownMenu_Initialize(menuFrame, function(self, level)
-        for i = 1, #self.menuList do
-            local info = UIDropDownMenu_CreateInfo();
-            info.text = self.menuList[i].text;
-            info.func = self.menuList[i].func;
-            UIDropDownMenu_AddButton(info, level);
-        end
-    end)
-
-    print("5");
-
-    EasyMenu(menuFrame, UIParent, "cursor", 0, 0, "MENU", 1);
-
-    print("6");
-end
-
-
 function LaFratellanza_MemberListUpdate(index)
   
     LaFratellanza_ClearMemberRow()
     for idx = 1, 13 do
-        if(guild_Roster[section][idx+index].name) then
+        if(guild_Roster_Filtered[idx+index].name) then
             local memberFrame = _G["LaFratellanza_Member" .. idx];
             
             if section == 'online' then
@@ -356,38 +317,34 @@ function LaFratellanza_MemberListUpdate(index)
                 memberFrame:SetAlpha(1);
             end
 
-            if(guild_Roster[section][idx+index].name == "Danko") then
-                print( guild_Roster[section][idx+index].spec.main .. guild_Roster[section][idx+index].class)
-            end
-
-            local classIconTexture = _G[memberFrame:GetName() .. "_ClassIcon_Texture"];
-            classIconTexture:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx+index].class);
+           local classIconTexture = _G[memberFrame:GetName() .. "_ClassIcon_Texture"];
+            classIconTexture:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster_Filtered[idx+index].class);
            
             local name = _G[memberFrame:GetName() .. "_Name_Text"];
-            name:SetText(guild_Roster[section][idx+index].name);
+            name:SetText(guild_Roster_Filtered[idx+index].name);
 
 
             local lvl = _G[memberFrame:GetName() .. "_Level_Text"];
-            lvl:SetText(guild_Roster[section][idx+index].lvl);
+            lvl:SetText(guild_Roster_Filtered[idx+index].lvl);
 
-            if(guild_Roster[section][idx+index].spec.main) then
-                _G[memberFrame:GetName() .. "_MainSpec_Texture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx+index].spec.main .. guild_Roster[section][idx+index].class);
+            if(guild_Roster_Filtered[idx+index].spec.main) then
+                _G[memberFrame:GetName() .. "_MainSpec_Texture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster_Filtered[idx+index].spec.main .. guild_Roster_Filtered[idx+index].class);
             end
 
-            if(guild_Roster[section][idx+index].spec.off) then
-                _G[memberFrame:GetName() .. "_OffSpec_Texture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx+index].spec.off .. guild_Roster[section][idx+index].class);
+            if(guild_Roster_Filtered[idx+index].spec.off) then
+                _G[memberFrame:GetName() .. "_OffSpec_Texture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster_Filtered[idx+index].spec.off .. guild_Roster_Filtered[idx+index].class);
             end
             
-            if(guild_Roster[section][idx+index].prof.main) then
-                _G[memberFrame:GetName() .. "_MainProf_Texture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx+index].prof.main);
+            if(guild_Roster_Filtered[idx+index].prof.main) then
+                _G[memberFrame:GetName() .. "_MainProf_Texture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster_Filtered[idx+index].prof.main);
             end
 
-            if(guild_Roster[section][idx+index].prof.off) then
-                _G[memberFrame:GetName() .. "_OffProf_Texture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster[section][idx+index].prof.off);
+            if(guild_Roster_Filtered[idx+index].prof.off) then
+                _G[memberFrame:GetName() .. "_OffProf_Texture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. guild_Roster_Filtered[idx+index].prof.off);
             end
 
             local zone = _G[memberFrame:GetName() .. "_Zone_Text"];
-            zone:SetText(guild_Roster[section][idx+index].zone);
+            zone:SetText(guild_Roster_Filtered[idx+index].zone);
 
             if section == 'offline' then
                     name:SetTextColor(0.5, 0.5, 0.5);
@@ -400,12 +357,12 @@ function LaFratellanza_MemberListUpdate(index)
             end
 
             local rank = _G[memberFrame:GetName() .. "_Rank"];
-            _G[memberFrame:GetName() .. "_Rank_Texture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\rank_]] .. ToLowerCase(Trim(guild_Roster[section][idx+index].rank)));
+            _G[memberFrame:GetName() .. "_Rank_Texture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\rank_]] .. ToLowerCase(Trim(guild_Roster_Filtered[idx+index].rank)));
 
-            if(guild_Roster[section][idx+index].altOf) then
+            if(guild_Roster_Filtered[idx+index].altOf) then
                 rank:SetScript("OnEnter", function(self)
                     GameTooltip:SetOwner(self, "ANCHOR_TOP");
-                    GameTooltip:SetText(ToUpperCase(guild_Roster[section][idx+index].altOf), 1, 1, 1, true);
+                    GameTooltip:SetText(ToUpperCase(guild_Roster_Filtered[idx+index].altOf), 1, 1, 1, true);
                     GameTooltip:Show();
                 end)
         
@@ -456,7 +413,11 @@ end
 
 function LaFratellanza_ScrollBarUpdate()
     local minValue = 1;
-    local maxValue = (listLength*32);
+    local addValue = 0
+    if listLength > 13 and (listLength-13) % 5 ~= 0 then
+        addValue = (5 - ((listLength - 13) % 5)) * 32;
+    end
+    local maxValue = (listLength*32) + addValue;
     scrollChild:SetSize(665, maxValue);
     scrollChild:SetPoint("RIGHT", membersFrame, "LEFT", 0, 0);
     scrollFrame:SetScrollChild(scrollChild);
@@ -475,9 +436,41 @@ function LaFratellanza_ScrollBarUpdate()
     end)
 end
 
+function LaFratellanza_GuildRosterFiltered()
+
+    guild_Roster_Filtered = {}
+
+    if(profFilter ~= "All professions" or specFilter ~= "All specs") then
+
+        if(specFilter ~= "All specs") then
+            print("specFilter" .. specFilter)
+            for _, member in ipairs(guild_Roster[section]) do
+                if (member.spec.main == specFilter or member.spec.off == specFilter) then
+                    table.insert(guild_Roster_Filtered, member)
+                end
+            end
+        end
+
+        if(profFilter ~= "All professions") then
+            for _, member in ipairs(guild_Roster[section]) do
+                if (member.prof.main == profFilter or member.prof.off == profFilter) then
+                    table.insert(guild_Roster_Filtered, member)
+                end
+            end
+        end
+
+    else
+        guild_Roster_Filtered = guild_Roster[section]
+    end
+
+end
+
+
 function LaFratellanza_MembersFrameInit()
 
-    listLength = #guild_Roster[section];
+    LaFratellanza_GuildRosterFiltered()
+
+    listLength = #guild_Roster_Filtered;
     membersFrame:Show();
 
     if(isFirstOpen) then
@@ -567,6 +560,7 @@ end)
 
 
 local previousSelection = "Online";
+local previousSpecFilter = "All specs";
 
 function LaFratellanza_InitDropDown(self, level, menuList)
     local info = UIDropDownMenu_CreateInfo();
@@ -597,6 +591,135 @@ function LaFratellanza_DropDownOnClick(self, arg1, arg2, checked)
 
 end
 
+function LaFratellanza_InitSpecsDropDown(self, level, menuList)
+    local info = UIDropDownMenu_CreateInfo();
+
+    info.func = LaFratellanza_SpecsDropDownOnClick;
+
+    if level == 1 then
+        info.text = "All specs";
+        info.value = "All specs";
+        UIDropDownMenu_AddButton(info)
+
+        info.text = "Frost";
+        info.value = "Frost";
+        UIDropDownMenu_AddButton(info)
+
+        info.text = "Restoration";
+        info.value = "Restoration";
+        UIDropDownMenu_AddButton(info)
+
+        info.text = "Feral";
+        info.value = "Feral";
+        UIDropDownMenu_AddButton(info)
+
+        info.text = "Balance";
+        info.value = "Balance";
+        UIDropDownMenu_AddButton(info)
+
+        info.text = "Guardian";
+        info.value = "Guardian";
+        UIDropDownMenu_AddButton(info)
+
+        info.text = "BeastMastery";
+        info.value = "BeastMastery";
+        UIDropDownMenu_AddButton(info)
+
+        info.text = "Marksmanship";
+        info.value = "Marksmanship";
+        UIDropDownMenu_AddButton(info)
+
+        info.text = "Survival";
+        info.value = "Survival";
+        UIDropDownMenu_AddButton(info)
+
+        info.text = "Affliction";
+        info.value = "Affliction";
+        UIDropDownMenu_AddButton(info)
+
+        info.text = "Destruction";
+        info.value = "Destruction";
+        UIDropDownMenu_AddButton(info)
+
+        info.text = "Demonology";
+        info.value = "Demonology";
+        UIDropDownMenu_AddButton(info)
+
+        info.text = "Shadow";
+        info.value = "Shadow";
+        UIDropDownMenu_AddButton(info)
+
+        info.text = "Discipline";
+        info.value = "Discipline";
+        UIDropDownMenu_AddButton(info)
+
+        info.text = "Holy";
+        info.value = "Holy";
+        UIDropDownMenu_AddButton(info)
+
+        info.text = "Fire";
+        info.value = "Fire";
+        UIDropDownMenu_AddButton(info)
+
+        info.text = "Arcane";
+        info.value = "Arcane";
+        UIDropDownMenu_AddButton(info)
+
+        info.text = "Protection";
+        info.value = "Protection";
+        UIDropDownMenu_AddButton(info)
+
+        info.text = "Fury";
+        info.value = "Fury";
+        UIDropDownMenu_AddButton(info)
+
+        info.text = "Arms";
+        info.value = "Arms";
+        UIDropDownMenu_AddButton(info)
+
+        info.text = "Retribution";
+        info.value = "Retribution";
+        UIDropDownMenu_AddButton(info)
+
+        info.text = "Combat";
+        info.value = "Combat";
+        UIDropDownMenu_AddButton(info)
+
+        info.text = "Assassination";
+        info.value = "Assassination";
+        UIDropDownMenu_AddButton(info)
+
+        info.text = "Subtlety";
+        info.value = "Subtlety";
+        UIDropDownMenu_AddButton(info)
+
+        info.text = "Elemental";
+        info.value = "Elemental";
+        UIDropDownMenu_AddButton(info)
+
+        info.text = "Enhancement";
+        info.value = "Enhancement";
+        UIDropDownMenu_AddButton(info)
+
+    end
+end
+
+function LaFratellanza_SpecsDropDownOnClick(self, arg1, arg2, checked)
+    if self.value ~= previousSpecFilter then
+        previousSpecFilter = self.value;
+
+        print(self.value)
+
+        local dropDownButton2 = _G["LaFratellanza_DropDownButton2"];
+        UIDropDownMenu_SetText(dropDownButton2, self.value);
+
+        specFilter = self.value;
+        LaFratellanza_MembersFrameInit();
+    end
+
+end
+
+
 
 
 LaFratellanza:RegisterEvent("GUILD_ROSTER_UPDATE");
@@ -611,3 +734,6 @@ LaFratellanza:SetScript("OnEvent", function(self, event, ...)
 
     end
 end)
+
+
+

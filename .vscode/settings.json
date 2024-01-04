@@ -44,6 +44,8 @@
         "string",
         "GetGuildRosterInfo",
         "class",
-        "UIDropDownMenu_SetText"
+        "UIDropDownMenu_SetText",
+        "EasyMenu",
+        "ChatFrame_SendTell"
     ]
 }

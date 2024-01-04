@@ -304,8 +304,8 @@
 				<Size x="150" y="30"/>
 				<Scripts>
 					<OnLoad>
-						UIDropDownMenu_Initialize(self, LaFratellanza_InitDropDown)
-						UIDropDownMenu_SetText(self, "Online")
+						UIDropDownMenu_Initialize(self, LaFratellanza_InitSpecsDropDown)
+						UIDropDownMenu_SetText(self, "All Specs")
 					</OnLoad>
 				</Scripts>
         	</Button>

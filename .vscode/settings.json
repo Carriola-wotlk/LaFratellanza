@@ -43,6 +43,7 @@
         "table",
         "string",
         "GetGuildRosterInfo",
-        "class"
+        "class",
+        "UIDropDownMenu_SetText"
     ]
 }

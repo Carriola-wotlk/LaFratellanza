@@ -246,7 +246,7 @@
 						<Anchor point="TOPLEFT"/>
 					</Anchors>
 				</Texture>
-				<Texture file="Interface\AddOns\LaFratellanza\texture\frames\main-top-right">
+				<Texture name="LaFratellanza_main_texture_top_right" file="Interface\AddOns\LaFratellanza\texture\frames\main-top-right">
 					<Size x="512" y="512"/>
 					<Anchors>
 						<Anchor point="TOPRIGHT"/>
@@ -258,7 +258,7 @@
 						<Anchor point="BOTTOMLEFT"/>
 					</Anchors>
 				</Texture>
-				<Texture file="Interface\AddOns\LaFratellanza\texture\frames\main-bottom-right">
+				<Texture name="LaFratellanza_main_texture_bottom_right" file="Interface\AddOns\LaFratellanza\texture\frames\main-bottom-right">
 					<Size x="512" y="64"/>
 					<Anchors>
 						<Anchor point="BOTTOMRIGHT"/>
@@ -328,133 +328,11 @@
 				</Scripts>
         	</Button>
 
-			<Button name="$parent_Class_Menu">
-				<Size x="40" y="32"/>
-				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset x="232" y="-60"/>
-					</Anchor>
-				</Anchors>
-				<Layers>
-					<Layer level="OVERLAY">
-						<FontString name="$parent_Text" parentKey="title" inherits="GameFontNormal" wraponspaces="false" justifyH="LEFT" text="Class">
-							<Color r="1" g="1" b="1"/>
-						</FontString>
-					</Layer>
-				</Layers>
-			</Button>
-			<Button name="$parent_Name_Menu">
-				<Size x="90" y="32"/>
-				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset x="276" y="-60"/>
-					</Anchor>
-				</Anchors>
-				<Layers>
-					<Layer level="OVERLAY">
-						<FontString name="$parent_Text" parentKey="title" inherits="GameFontNormal" wraponspaces="false" justifyH="LEFT" text="Nome">
-							<Color r="1" g="1" b="1"/>
-						</FontString>
-					</Layer>
-				</Layers>
-			</Button>
-			<Button name="$parent_Lvl_Menu">
-				<Size x="31" y="32"/>
-				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset x="367" y="-60"/>
-					</Anchor>
-				</Anchors>
-				<Layers>
-					<Layer level="OVERLAY">
-						<FontString name="$parent_Text" parentKey="title" inherits="GameFontNormal" wraponspaces="false" justifyH="CENTER" text="lvl">
-							<Color r="1" g="1" b="1"/>
-						</FontString>
-					</Layer>
-				</Layers>
-			</Button>
-			<Button name="$parent_Spec_Menu">
-				<Size x="81" y="32"/>
-				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset x="400" y="-60"/>
-					</Anchor>
-				</Anchors>
-				<Layers>
-					<Layer level="OVERLAY">
-						<FontString name="$parent_Text" parentKey="title" inherits="GameFontNormal" wraponspaces="false" justifyH="CENTER" text="MS/OS">
-							<Color r="1" g="1" b="1"/>
-						</FontString>
-					</Layer>
-				</Layers>
-			</Button>
-			<Button name="$parent_Professions_Menu">
-				<Size x="81" y="32"/>
-				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset x="482" y="-60"/>
-					</Anchor>
-				</Anchors>
-				<Layers>
-					<Layer level="OVERLAY">
-						<FontString name="$parent_Text" parentKey="title" inherits="GameFontNormal" wraponspaces="false" justifyH="CENTER" text="Professioni">
-							<Color r="1" g="1" b="1"/>
-						</FontString>
-					</Layer>
-				</Layers>
-			</Button>
-			<Button name="$parent_Zone_Menu">
-				<Size x="192" y="32"/>
-				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset x="573" y="-60"/>
-					</Anchor>
-				</Anchors>
-				<Layers>
-					<Layer level="OVERLAY">
-						<FontString name="$parent_Text" parentKey="title" inherits="GameFontNormal" wraponspaces="false" justifyH="LEFT" text="Zona">
-							<Color r="1" g="1" b="1"/>
-						</FontString>
-					</Layer>
-				</Layers>
-			</Button>
-			<Button name="$parent_Note_Menu">
-				<Size x="32" y="32"/>
-				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset x="765" y="-60"/>
-					</Anchor>
-				</Anchors>
-				<Layers>
-					<Layer level="OVERLAY">
-						<FontString name="$parent_Text" parentKey="title" inherits="GameFontNormal" wraponspaces="false" justifyH="CENTER" text="Nt">
-							<Color r="1" g="1" b="1"/>
-						</FontString>
-					</Layer>
-				</Layers>
-			</Button>
-			<Button name="$parent_Rank_Menu">
-				<Size x="70" y="32"/>
-				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset x="797" y="-60"/>
-					</Anchor>
-				</Anchors>
-				<Layers>
-					<Layer level="OVERLAY">
-						<FontString name="$parent_Text" parentKey="title" inherits="GameFontNormal" wraponspaces="false" justifyH="CENTER" text="Rank">
-							<Color r="1" g="1" b="1"/>
-						</FontString>
-					</Layer>
-				</Layers>
-			</Button>
-			
-
 			<Frame name="LaFratellanza_Main_Frame_Members" hidden="true">
 				<Size x="768" y="512"/>
 				<Anchors>
 					<Anchor point="CENTER">
-						<Offset x="65" y="-10"/>
+						<Offset x="75" y="0"/>
 					</Anchor>
 				</Anchors>
 
@@ -480,10 +358,135 @@
 								</Anchor>
 							</Anchors>
 						</FontString>
-
 					</Layer>
 
 				</Layers>
+
+				<Frames>
+					<Button name="$parent_Class_Menu">
+						<Size x="40" y="32"/>
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset x="12" y="-20"/>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer level="OVERLAY">
+								<FontString name="$parent_Text" parentKey="title" inherits="GameFontNormal" wraponspaces="false" justifyH="LEFT" text="Class">
+									<Color r="1" g="1" b="1"/>
+								</FontString>
+							</Layer>
+						</Layers>
+					</Button>
+					<Button name="$parent_Name_Menu">
+						<Size x="90" y="32"/>
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset x="276" y="-20"/>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer level="OVERLAY">
+								<FontString name="$parent_Text" parentKey="title" inherits="GameFontNormal" wraponspaces="false" justifyH="LEFT" text="Nome">
+									<Color r="1" g="1" b="1"/>
+								</FontString>
+							</Layer>
+						</Layers>
+					</Button>
+					<Button name="$parent_Lvl_Menu">
+						<Size x="31" y="32"/>
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset x="367" y="-20"/>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer level="OVERLAY">
+								<FontString name="$parent_Text" parentKey="title" inherits="GameFontNormal" wraponspaces="false" justifyH="CENTER" text="lvl">
+									<Color r="1" g="1" b="1"/>
+								</FontString>
+							</Layer>
+						</Layers>
+					</Button>
+					<Button name="$parent_Spec_Menu">
+						<Size x="81" y="32"/>
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset x="400" y="-20"/>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer level="OVERLAY">
+								<FontString name="$parent_Text" parentKey="title" inherits="GameFontNormal" wraponspaces="false" justifyH="CENTER" text="MS/OS">
+									<Color r="1" g="1" b="1"/>
+								</FontString>
+							</Layer>
+						</Layers>
+					</Button>
+					<Button name="$parent_Professions_Menu">
+						<Size x="81" y="32"/>
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset x="482" y="-20"/>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer level="OVERLAY">
+								<FontString name="$parent_Text" parentKey="title" inherits="GameFontNormal" wraponspaces="false" justifyH="CENTER" text="Professioni">
+									<Color r="1" g="1" b="1"/>
+								</FontString>
+							</Layer>
+						</Layers>
+					</Button>
+					<Button name="$parent_Zone_Menu">
+						<Size x="192" y="32"/>
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset x="573" y="-20"/>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer level="OVERLAY">
+								<FontString name="$parent_Text" parentKey="title" inherits="GameFontNormal" wraponspaces="false" justifyH="LEFT" text="Zona">
+									<Color r="1" g="1" b="1"/>
+								</FontString>
+							</Layer>
+						</Layers>
+					</Button>
+					<Button name="$parent_Note_Menu">
+						<Size x="32" y="32"/>
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset x="765" y="-20"/>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer level="OVERLAY">
+								<FontString name="$parent_Text" parentKey="title" inherits="GameFontNormal" wraponspaces="false" justifyH="CENTER" text="Nt">
+									<Color r="1" g="1" b="1"/>
+								</FontString>
+							</Layer>
+						</Layers>
+					</Button>
+					<Button name="$parent_Rank_Menu">
+						<Size x="70" y="32"/>
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset x="797" y="-20"/>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer level="OVERLAY">
+								<FontString name="$parent_Text" parentKey="title" inherits="GameFontNormal" wraponspaces="false" justifyH="CENTER" text="Rank">
+									<Color r="1" g="1" b="1"/>
+								</FontString>
+							</Layer>
+						</Layers>
+					</Button>
+
+
+
+				</Frames>
 
 			</Frame>
 

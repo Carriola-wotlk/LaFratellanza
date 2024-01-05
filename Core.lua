@@ -181,18 +181,14 @@ end
 function LaFratellanza_ShowMembersFrame()
     _G["LaFratellanza_Button1_NormalTexture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\buttons\button-press]]);
     _G["LaFratellanza_Button2_NormalTexture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\buttons\button-normal]]);
-    _G["LaFratellanza_Button3_NormalTexture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\buttons\button-normal]]);
-    _G["LaFratellanza_Button4_NormalTexture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\buttons\button-normal]]);
-    _G["LaFratellanza_main_texture_bottom_right"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\frames\members-bottom-right]]);
-    _G["LaFratellanza_main_texture_top_right"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\frames\members-top-right]]);
+    _G["LaFratellanza_main_texture_bottom_right"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\frames\main-bottom-right]]);
+    _G["LaFratellanza_main_texture_top_right"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\frames\main-top-right]]);
     _G["LaFratellanza_Main_Frame_Members"]:Show()
 end
 
 function LaFratellanza_ShowRulesFrame()
     _G["LaFratellanza_Button1_NormalTexture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\buttons\button-normal]]);
     _G["LaFratellanza_Button2_NormalTexture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\buttons\button-press]]);
-    _G["LaFratellanza_Button3_NormalTexture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\buttons\button-normal]]);
-    _G["LaFratellanza_Button4_NormalTexture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\buttons\button-normal]]);
     _G["LaFratellanza_main_texture_bottom_right"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\frames\regolamento-bottom-right]]);
     _G["LaFratellanza_main_texture_top_right"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\frames\regolamento-top-right]]);
     _G["LaFratellanza_Main_Frame_Members"]:Hide()
@@ -380,12 +376,12 @@ function LaFratellanza_ScrollBarInit()
     scrollChild = CreateFrame("Frame", "LaFratellanza_Main_Frame_Members_ScrollChild", scrollFrame);
     membersFrame.scrollFrame = scrollFrame;
     membersFrame.slider = slider;
-    scrollFrame:SetPoint("CENTER", membersFrame, "CENTER", -26, -10);
-    scrollFrame:SetSize(655, 430);
+    scrollFrame:SetPoint("CENTER", membersFrame, "CENTER", 0, -10);
+    scrollFrame:SetSize(768, 430);
     scrollFrame:EnableMouseWheel(true);
 
     slider:SetSize(25, 445);
-    slider:SetPoint("LEFT", membersFrame, "RIGHT", -82, -10);
+    slider:SetPoint("LEFT", membersFrame, "RIGHT", 0, -10);
     slider:SetBackdrop({
         edgeFile = "Interface\\Buttons\\UI-SliderBar-Border",
         bgFile = "Interface\\Buttons\\UI-SliderBar-Background",
@@ -428,7 +424,6 @@ function LaFratellanza_GuildRosterFiltered()
     if(profFilter ~= "All professions" or specFilter ~= "All specs") then
 
         if(specFilter ~= "All specs") then
-            print("specFilter" .. specFilter)
             for _, member in ipairs(guild_Roster[section]) do
                 if (member.spec.main == specFilter or member.spec.off == specFilter) then
                     table.insert(guild_Roster_Filtered, member)
@@ -527,10 +522,6 @@ function LaFratellanza_MenuButton_OnClick(self)
         LaFratellanza_ShowMembersFrame();
     elseif buttonName == "LaFratellanza_Button2" then
         LaFratellanza_ShowRulesFrame();
-    elseif buttonName == "LaFratellanza_Button3" then
-        LaFratellanza_ShowChatFrame();
-    elseif buttonName == "LaFratellanza_Button4" then
-        LaFratellanza_ShowStatsFrame();
     end
 end
 
@@ -692,8 +683,6 @@ end
 function LaFratellanza_SpecsDropDownOnClick(self, arg1, arg2, checked)
     if self.value ~= previousSpecFilter then
         previousSpecFilter = self.value;
-
-        print(self.value)
 
         local dropDownButton2 = _G["LaFratellanza_DropDownButton2"];
         UIDropDownMenu_SetText(dropDownButton2, self.value);

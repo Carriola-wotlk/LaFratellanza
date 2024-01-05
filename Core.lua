@@ -1,4 +1,4 @@
-local navBar = {"membri", "regolamento", "chat", "stats"};
+local navBar = {"membri", "regolamento"};
 local isMainFrameOpended = false;
 local LaFratellanza = CreateFrame("Frame");
 local guild_Roster_Names = {}
@@ -165,13 +165,14 @@ function LaFratellanza_OnLoad(self)
         local item = CreateFrame("Button", "LaFratellanza_Button" .. idx, self, "LaFratellanzaMenuButtonTemplate");
         self.items[idx] = item;
         _G["LaFratellanza_Button" .. idx .. "_Voice"]:SetText(value);
+        _G["LaFratellanza_Button" .. idx .. "_Voice"]:SetTextColor(0.2, 0.2, 0.2);
         _G["LaFratellanza_Button" .. idx .. "_IconTexture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. value .. "_icon");
 
         if idx == 1 then
-            item:SetPoint("LEFT", 30, 20);
+            item:SetPoint("LEFT", 23, -40);
             _G["LaFratellanza_Button1_NormalTexture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\buttons\button-press]]);
         else
-            item:SetPoint("TOPLEFT", self.items[idx-1], "BOTTOMLEFT", 0, -12);
+            item:SetPoint("TOPLEFT", self.items[idx-1], "BOTTOMLEFT", 0, -8);
         end
     end
 
@@ -196,22 +197,6 @@ function LaFratellanza_ShowRulesFrame()
     _G["LaFratellanza_main_texture_top_right"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\frames\regolamento-top-right]]);
     _G["LaFratellanza_Main_Frame_Members"]:Hide()
 end
-
-function LaFratellanza_ShowChatFrame()
-    _G["LaFratellanza_Button1_NormalTexture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\buttons\button-normal]]);
-    _G["LaFratellanza_Button2_NormalTexture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\buttons\button-normal]]);
-    _G["LaFratellanza_Button3_NormalTexture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\buttons\button-press]]);
-    _G["LaFratellanza_Button4_NormalTexture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\buttons\button-normal]]);
-    _G["LaFratellanza_main_texture_bottom_right"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\frames\chat-bottom-right]]);
-    _G["LaFratellanza_main_texture_top_right"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\frames\chat-top-right]]);
-    _G["LaFratellanza_Main_Frame_Members"]:Hide();
-end
-
-function LaFratellanza_ShowStatsFrame()
-    --_G["LaFratellanza_main_texture_bottom_right"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\regolamento-bottom-right]]);
-    --_G["LaFratellanza_main_texture_top_right"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\regolamento-top-right]]);
-end
-
 
 
 -------------------------------------------
@@ -351,9 +336,9 @@ function LaFratellanza_MemberListUpdate(index)
                     lvl:SetTextColor(0.5, 0.5, 0.5);
                     zone:SetTextColor(0.5, 0.5, 0.5);
             else
-                    name:SetTextColor(1, 1, 0);
-                    lvl:SetTextColor(1, 1, 0);
-                    zone:SetTextColor(1, 1, 0);
+                    name:SetTextColor(0.9, 0.9, 0.9);
+                    lvl:SetTextColor(0.9, 0.9, 0.9);
+                    zone:SetTextColor(0.9, 0.9, 0.9);
             end
 
             local rank = _G[memberFrame:GetName() .. "_Rank"];

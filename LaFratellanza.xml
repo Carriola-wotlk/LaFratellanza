@@ -8,7 +8,7 @@
 		</Size>
 		<Layers>
 			<Layer level="OVERLAY">
-				<Texture name="$parent_IconTexture">
+			<Texture name="$parent_IconTexture">
 					<Size x="32" y="32"/>
 					<Anchors>
 						<Anchor point="LEFT"/>
@@ -17,7 +17,7 @@
 				<FontString name="$parent_Voice" parentKey="title" inherits="GameFontNormal" wraponspaces="false" justifyH="LEFT">
 					<Anchors>
 						<Anchor point="LEFT">
-							<Offset x="38" y="0"/>
+							<Offset x="32" y="1"/>
 						</Anchor>
 					</Anchors>
 				</FontString>
@@ -36,8 +36,16 @@
 				</Anchor>
 			</Anchors>
 		</NormalTexture>
-		<PushedTexture file="Interface\AddOns\LaFratellanza\texture\buttons\button-press"/>
-		<HighlightTexture file="Interface\AddOns\LaFratellanza\texture\buttons\button-hover" alphaMode="ADD"/>
+		<PushedTexture file="Interface\AddOns\LaFratellanza\texture\buttons\button-press">
+			<Size>
+				<AbsDimension x="128" y="32"/>
+			</Size>
+		</PushedTexture>
+		<HighlightTexture file="Interface\AddOns\LaFratellanza\texture\buttons\button-hover">
+			<Size>
+				<AbsDimension x="128" y="32"/>
+			</Size>
+			</HighlightTexture>
 		<Scripts>
 			<OnClick function="LaFratellanza_MenuButton_OnClick"/>
 		</Scripts>
@@ -225,38 +233,33 @@
 	<Frame name="LaFratellanza_Main_Frame" toplevel="true" parent="UIParent" enableMouse="true" movable="true" hidden="true">
 		<Size x="1024" y="576"/>
 		<Anchors>
-			<Anchor point="CENTER" relativePoint="CENTER" relativeTo="UIParent"/>
+			<Anchor point="CENTER" relativePoint="CENTER" relativeTo="UIParent">
+				<Offset x="0" y="130"/>
+			</Anchor>
 		</Anchors>
 
 		<Layers>
-
-			<Layer level="OVERLAY">
-				<FontString name="$parent_Title" parentKey="title" inherits="GameFontNormal" text="La Fratellanza">
-					<Anchors>
-						<Anchor point="TOP">
-							<Offset x="60" y="-18"/>
-						</Anchor>
-					</Anchors>
-				</FontString>
-			</Layer>
-
 			<Layer level="BACKGROUND">
 				<Texture file="Interface\AddOns\LaFratellanza\texture\frames\main-top-left">
+					<Size x="512" y="512"/>
 					<Anchors>
 						<Anchor point="TOPLEFT"/>
 					</Anchors>
 				</Texture>
-				<Texture name="LaFratellanza_main_texture_top_right" file="Interface\AddOns\LaFratellanza\texture\frames\members-top-right">
+				<Texture file="Interface\AddOns\LaFratellanza\texture\frames\main-top-right">
+					<Size x="512" y="512"/>
 					<Anchors>
 						<Anchor point="TOPRIGHT"/>
 					</Anchors>
 				</Texture>
 				<Texture file="Interface\AddOns\LaFratellanza\texture\frames\main-bottom-left">
+					<Size x="512" y="64"/>
 					<Anchors>
 						<Anchor point="BOTTOMLEFT"/>
 					</Anchors>
 				</Texture>
-				<Texture name="LaFratellanza_main_texture_bottom_right" file="Interface\AddOns\LaFratellanza\texture\frames\members-bottom-right">
+				<Texture file="Interface\AddOns\LaFratellanza\texture\frames\main-bottom-right">
+					<Size x="512" y="64"/>
 					<Anchors>
 						<Anchor point="BOTTOMRIGHT"/>
 					</Anchors>
@@ -283,7 +286,7 @@
 			<Button name="LaFratellanza_DropDownButton" inherits="UIDropDownMenuTemplate">
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset x="420" y="-49"/>
+						<Offset x="420" y="-29"/>
 					</Anchor>
 				</Anchors>
 				<Size x="150" y="30"/>
@@ -298,7 +301,7 @@
 			<Button name="LaFratellanza_DropDownButton2" inherits="UIDropDownMenuTemplate">
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset x="570" y="-49"/>
+						<Offset x="570" y="-29"/>
 					</Anchor>
 				</Anchors>
 				<Size x="150" y="30"/>
@@ -313,7 +316,7 @@
 			<Button name="LaFratellanza_DropDownButton3" inherits="UIDropDownMenuTemplate">
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset x="720" y="-49"/>
+						<Offset x="720" y="-29"/>
 					</Anchor>
 				</Anchors>
 				<Size x="150" y="30"/>
@@ -329,7 +332,7 @@
 				<Size x="40" y="32"/>
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset x="222" y="-80"/>
+						<Offset x="232" y="-60"/>
 					</Anchor>
 				</Anchors>
 				<Layers>
@@ -344,7 +347,7 @@
 				<Size x="90" y="32"/>
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset x="266" y="-80"/>
+						<Offset x="276" y="-60"/>
 					</Anchor>
 				</Anchors>
 				<Layers>
@@ -359,7 +362,7 @@
 				<Size x="31" y="32"/>
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset x="357" y="-80"/>
+						<Offset x="367" y="-60"/>
 					</Anchor>
 				</Anchors>
 				<Layers>
@@ -374,7 +377,7 @@
 				<Size x="81" y="32"/>
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset x="390" y="-80"/>
+						<Offset x="400" y="-60"/>
 					</Anchor>
 				</Anchors>
 				<Layers>
@@ -389,7 +392,7 @@
 				<Size x="81" y="32"/>
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset x="472" y="-80"/>
+						<Offset x="482" y="-60"/>
 					</Anchor>
 				</Anchors>
 				<Layers>
@@ -404,7 +407,7 @@
 				<Size x="192" y="32"/>
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset x="563" y="-80"/>
+						<Offset x="573" y="-60"/>
 					</Anchor>
 				</Anchors>
 				<Layers>
@@ -419,7 +422,7 @@
 				<Size x="32" y="32"/>
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset x="755" y="-80"/>
+						<Offset x="765" y="-60"/>
 					</Anchor>
 				</Anchors>
 				<Layers>
@@ -434,7 +437,7 @@
 				<Size x="70" y="32"/>
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset x="787" y="-80"/>
+						<Offset x="797" y="-60"/>
 					</Anchor>
 				</Anchors>
 				<Layers>
@@ -451,7 +454,7 @@
 				<Size x="768" y="512"/>
 				<Anchors>
 					<Anchor point="CENTER">
-						<Offset x="55" y="-30"/>
+						<Offset x="65" y="-10"/>
 					</Anchor>
 				</Anchors>
 

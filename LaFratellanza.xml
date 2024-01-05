@@ -20,6 +20,10 @@
 							<Offset x="32" y="1"/>
 						</Anchor>
 					</Anchors>
+					 <Shadow>
+						<Offset x="0" y="0" />
+						<Color r="0" g="0" b="0"/>
+					</Shadow>
 				</FontString>
 			</Layer>
 
@@ -52,16 +56,16 @@
 	</Button>
 
 	<Frame name="LaFratellanza_Member_Template" virtual="true">
-		<Size x="640" y="32"/>
+		<Size x="768" y="32"/>
 		<Anchors>
 			<Anchor point="LEFT">
-				<Offset x="36" y="0"/>
+				<Offset x="0" y="0"/>
 			</Anchor>
 		</Anchors>
 		<Frames>
 
 			<Frame name="$parent_Background">
-				<Size x="640" y="32"/>
+				<Size x="768" y="32"/>
 				<Anchors>
 					<Anchor point="CENTER" />
 				</Anchors>
@@ -86,7 +90,7 @@
 				<Size x="32" y="32"/>
 					<Anchors>
 						<Anchor point="LEFT">
-							<Offset x="6" y="0"/>
+							<Offset x="13" y="0"/>
 						</Anchor>
 					</Anchors>
 				<NormalTexture name="$parent_Texture">
@@ -100,10 +104,10 @@
 			</Button>
 
 			<Button name="$parent_Name">
-				<Size x="90" y="30"/>
+				<Size x="92" y="30"/>
 					<Anchors>
 						<Anchor point="LEFT">
-							<Offset x="45" y="0"/>
+							<Offset x="58" y="0"/>
 						</Anchor>
 					</Anchors>
 				<Layers>
@@ -117,7 +121,7 @@
 				<Size x="30" y="30"/>
 					<Anchors>
 						<Anchor point="LEFT">
-							<Offset x="145" y="0"/>
+							<Offset x="155" y="0"/>
 						</Anchor>
 					</Anchors>
 				<Layers>
@@ -131,7 +135,7 @@
 				<Size x="32" y="32"/>
 					<Anchors>
 						<Anchor point="LEFT">
-							<Offset x="180" y="0"/>
+							<Offset x="190" y="0"/>
 						</Anchor>
 					</Anchors>
 				<NormalTexture name="$parent_Texture">
@@ -148,7 +152,7 @@
 				<Size x="32" y="32"/>
 					<Anchors>
 						<Anchor point="LEFT">
-							<Offset x="212" y="0"/>
+							<Offset x="222" y="0"/>
 						</Anchor>
 					</Anchors>
 				<NormalTexture name="$parent_Texture">
@@ -165,7 +169,7 @@
 				<Size x="32" y="32"/>
 					<Anchors>
 						<Anchor point="LEFT">
-							<Offset x="260" y="0"/>
+							<Offset x="270" y="0"/>
 						</Anchor>
 					</Anchors>
 				<NormalTexture name="$parent_Texture">
@@ -182,7 +186,7 @@
 				<Size x="32" y="32"/>
 					<Anchors>
 						<Anchor point="LEFT">
-							<Offset x="292" y="0"/>
+							<Offset x="302" y="0"/>
 						</Anchor>
 					</Anchors>
 				<NormalTexture name="$parent_Texture">
@@ -199,12 +203,12 @@
 				<Size x="150" y="30"/>
 					<Anchors>
 						<Anchor point="LEFT">
-							<Offset x="346" y="0"/>
+							<Offset x="353" y="0"/>
 						</Anchor>
 					</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
-						<FontString name="$parent_Text" parentKey="title" inherits="GameFontNormal" wraponspaces="false" justifyH="LEFT" />
+						<FontString name="$parent_Text" parentKey="title" inherits="GameFontNormal" wraponspaces="true" justifyH="LEFT" />
 					</Layer>
 				</Layers>
 			</Button>
@@ -213,7 +217,7 @@
 				<Size x="64" y="32"/>
 					<Anchors>
 						<Anchor point="LEFT">
-							<Offset x="570" y="0"/>
+							<Offset x="565" y="0"/>
 						</Anchor>
 					</Anchors>
 				<NormalTexture name="$parent_Texture">
@@ -224,6 +228,19 @@
 						<Anchor point="CENTER" />
 					</Anchors>
 				</NormalTexture>
+			</Button>
+			<Button name="$parent_Main">
+				<Size x="92" y="30"/>
+					<Anchors>
+						<Anchor point="LEFT">
+							<Offset x="640" y="0"/>
+						</Anchor>
+					</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString name="$parent_Text" parentKey="title" inherits="GameFontNormal" wraponspaces="false" justifyH="LEFT" />
+					</Layer>
+				</Layers>
 			</Button>
 
 		</Frames>
@@ -283,51 +300,6 @@
 				</Scripts>
 			</Button>
 
-			<Button name="LaFratellanza_DropDownButton" inherits="UIDropDownMenuTemplate">
-				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset x="420" y="-29"/>
-					</Anchor>
-				</Anchors>
-				<Size x="150" y="30"/>
-				<Scripts>
-					<OnLoad>
-						UIDropDownMenu_Initialize(self, LaFratellanza_InitDropDown)
-						UIDropDownMenu_SetText(self, "Online")
-					</OnLoad>
-				</Scripts>
-        	</Button>
-
-			<Button name="LaFratellanza_DropDownButton2" inherits="UIDropDownMenuTemplate">
-				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset x="570" y="-29"/>
-					</Anchor>
-				</Anchors>
-				<Size x="150" y="30"/>
-				<Scripts>
-					<OnLoad>
-						UIDropDownMenu_Initialize(self, LaFratellanza_InitSpecsDropDown)
-						UIDropDownMenu_SetText(self, "All Specs")
-					</OnLoad>
-				</Scripts>
-        	</Button>
-
-			<Button name="LaFratellanza_DropDownButton3" inherits="UIDropDownMenuTemplate">
-				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset x="720" y="-29"/>
-					</Anchor>
-				</Anchors>
-				<Size x="150" y="30"/>
-				<Scripts>
-					<OnLoad>
-						UIDropDownMenu_Initialize(self, LaFratellanza_InitDropDown)
-						UIDropDownMenu_SetText(self, "Online")
-					</OnLoad>
-				</Scripts>
-        	</Button>
-
 			<Frame name="LaFratellanza_Main_Frame_Members" hidden="true">
 				<Size x="768" y="512"/>
 				<Anchors>
@@ -363,8 +335,52 @@
 				</Layers>
 
 				<Frames>
+					<Button name="LaFratellanza_DropDownButton" inherits="UIDropDownMenuTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset x="180" y="10"/>
+							</Anchor>
+						</Anchors>
+						<Size x="150" y="30"/>
+						<Scripts>
+							<OnLoad>
+								UIDropDownMenu_Initialize(self, LaFratellanza_InitDropDown)
+								UIDropDownMenu_SetText(self, "Online")
+							</OnLoad>
+						</Scripts>
+					</Button>
+
+					<Button name="LaFratellanza_DropDownButton2" inherits="UIDropDownMenuTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset x="460" y="10"/>
+							</Anchor>
+						</Anchors>
+						<Size x="150" y="30"/>
+						<Scripts>
+							<OnLoad>
+								UIDropDownMenu_Initialize(self, LaFratellanza_InitSpecsDropDown)
+								UIDropDownMenu_SetText(self, "All Specs")
+							</OnLoad>
+						</Scripts>
+					</Button>
+
+					<Button name="LaFratellanza_DropDownButton3" inherits="UIDropDownMenuTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset x="610" y="10"/>
+							</Anchor>
+						</Anchors>
+						<Size x="150" y="30"/>
+						<Scripts>
+							<OnLoad>
+								UIDropDownMenu_Initialize(self, LaFratellanza_InitDropDown)
+								UIDropDownMenu_SetText(self, "Online")
+							</OnLoad>
+						</Scripts>
+					</Button>
 					<Button name="$parent_Class_Menu">
-						<Size x="40" y="32"/>
+						<Size x="39" y="32"/>
 						<Anchors>
 							<Anchor point="TOPLEFT">
 								<Offset x="12" y="-20"/>
@@ -379,10 +395,10 @@
 						</Layers>
 					</Button>
 					<Button name="$parent_Name_Menu">
-						<Size x="90" y="32"/>
+						<Size x="89" y="32"/>
 						<Anchors>
 							<Anchor point="TOPLEFT">
-								<Offset x="276" y="-20"/>
+								<Offset x="58" y="-20"/>
 							</Anchor>
 						</Anchors>
 						<Layers>
@@ -397,7 +413,7 @@
 						<Size x="31" y="32"/>
 						<Anchors>
 							<Anchor point="TOPLEFT">
-								<Offset x="367" y="-20"/>
+								<Offset x="147" y="-20"/>
 							</Anchor>
 						</Anchors>
 						<Layers>
@@ -412,7 +428,7 @@
 						<Size x="81" y="32"/>
 						<Anchors>
 							<Anchor point="TOPLEFT">
-								<Offset x="400" y="-20"/>
+								<Offset x="180" y="-20"/>
 							</Anchor>
 						</Anchors>
 						<Layers>
@@ -427,7 +443,7 @@
 						<Size x="81" y="32"/>
 						<Anchors>
 							<Anchor point="TOPLEFT">
-								<Offset x="482" y="-20"/>
+								<Offset x="263" y="-20"/>
 							</Anchor>
 						</Anchors>
 						<Layers>
@@ -439,10 +455,10 @@
 						</Layers>
 					</Button>
 					<Button name="$parent_Zone_Menu">
-						<Size x="192" y="32"/>
+						<Size x="155" y="32"/>
 						<Anchors>
 							<Anchor point="TOPLEFT">
-								<Offset x="573" y="-20"/>
+								<Offset x="350" y="-20"/>
 							</Anchor>
 						</Anchors>
 						<Layers>
@@ -453,16 +469,16 @@
 							</Layer>
 						</Layers>
 					</Button>
-					<Button name="$parent_Note_Menu">
-						<Size x="32" y="32"/>
+					<Button name="$parent_Actions_Menu">
+						<Size x="54" y="32"/>
 						<Anchors>
 							<Anchor point="TOPLEFT">
-								<Offset x="765" y="-20"/>
+								<Offset x="503" y="-20"/>
 							</Anchor>
 						</Anchors>
 						<Layers>
 							<Layer level="OVERLAY">
-								<FontString name="$parent_Text" parentKey="title" inherits="GameFontNormal" wraponspaces="false" justifyH="CENTER" text="Nt">
+								<FontString name="$parent_Text" parentKey="title" inherits="GameFontNormal" wraponspaces="false" justifyH="CENTER" text="Azioni">
 									<Color r="1" g="1" b="1"/>
 								</FontString>
 							</Layer>
@@ -472,12 +488,42 @@
 						<Size x="70" y="32"/>
 						<Anchors>
 							<Anchor point="TOPLEFT">
-								<Offset x="797" y="-20"/>
+								<Offset x="563" y="-20"/>
 							</Anchor>
 						</Anchors>
 						<Layers>
 							<Layer level="OVERLAY">
 								<FontString name="$parent_Text" parentKey="title" inherits="GameFontNormal" wraponspaces="false" justifyH="CENTER" text="Rank">
+									<Color r="1" g="1" b="1"/>
+								</FontString>
+							</Layer>
+						</Layers>
+					</Button>
+					<Button name="$parent_Main_Menu">
+						<Size x="70" y="32"/>
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset x="645" y="-20"/>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer level="OVERLAY">
+								<FontString name="$parent_Text" parentKey="title" inherits="GameFontNormal" wraponspaces="false" justifyH="LEFT" text="Main">
+									<Color r="1" g="1" b="1"/>
+								</FontString>
+							</Layer>
+						</Layers>
+					</Button>
+					<Button name="$parent_Note_Menu">
+						<Size x="32" y="32"/>
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset x="728" y="-20"/>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer level="OVERLAY">
+								<FontString name="$parent_Text" parentKey="title" inherits="GameFontNormal" wraponspaces="false" justifyH="CENTER" text="Nt">
 									<Color r="1" g="1" b="1"/>
 								</FontString>
 							</Layer>

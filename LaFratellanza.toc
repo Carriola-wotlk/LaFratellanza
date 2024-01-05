@@ -5,4 +5,6 @@
 ## Version: 1.0
 
 Core.lua
+Variables.lua
+Functions.lua
 LaFratellanza.xml

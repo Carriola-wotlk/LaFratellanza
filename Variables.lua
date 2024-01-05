@@ -67,6 +67,7 @@ LaFratellanza_prof_table = {
 
 LaFratellanza_spec_table = {
     healer = "Healer",
+    heal = "Healer",
     tank = "Tank",
 
     unh = "Unholy",

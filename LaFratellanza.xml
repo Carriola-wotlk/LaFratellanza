@@ -107,7 +107,7 @@
 				<Size x="92" y="30"/>
 					<Anchors>
 						<Anchor point="LEFT">
-							<Offset x="58" y="0"/>
+							<Offset x="55" y="0"/>
 						</Anchor>
 					</Anchors>
 				<Layers>
@@ -337,7 +337,7 @@
 					<Anchors>
 					<Anchor point="TOPLEFT">
 						<Offset>
-							<AbsDimension x="0" y="0"/>
+							<AbsDimension x="-57" y="56"/>
 						</Offset>
 					</Anchor>
 					</Anchors>

@@ -120,12 +120,16 @@ function LaFratellanza_MemberListUpdate(index)
                 memberFrame:SetAlpha(1);
             end
 
-           local classIconTexture = _G[memberFrame:GetName() .. "_ClassIcon_Texture"];
-            classIconTexture:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. LaFratellanza_guild_roster_filtered[idx+index].class);
-           
+            local classIconTexture = _G[memberFrame:GetName() .. "_ClassIcon_Texture"];
+
+            if LaFratellanza_guild_roster_filtered[idx+index].name == 'Cipollino' then
+                classIconTexture:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\Cipollino]]);
+            else
+                classIconTexture:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\]] .. LaFratellanza_guild_roster_filtered[idx+index].class);
+            end
+            
             local name = _G[memberFrame:GetName() .. "_Name_Text"];
             name:SetText(LaFratellanza_guild_roster_filtered[idx+index].name);
-
 
             local lvl = _G[memberFrame:GetName() .. "_Level_Text"];
             lvl:SetText(LaFratellanza_guild_roster_filtered[idx+index].lvl);
@@ -165,8 +169,8 @@ function LaFratellanza_MemberListUpdate(index)
                     zone:SetTextColor(0.9, 0.9, 0.9);
             end
 
-            local invite = _G[memberFrame:GetName() .. "_Invite"]
-            local whisper = _G[memberFrame:GetName() .. "_Whisper"]
+            local invite = _G[memberFrame:GetName() .. "_Invite"];
+            local whisper = _G[memberFrame:GetName() .. "_Whisper"];
 
             if LaFratellanza_section == 'offline' then
                 invite:Hide();

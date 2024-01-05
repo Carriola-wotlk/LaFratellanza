@@ -95,8 +95,10 @@ function LaFratellanza_ClearMemberRow()
         _G["LaFratellanza_Member" .. idx .. "_Zone_Text"]:SetText(nil);
         _G["LaFratellanza_Member" .. idx .. "_Main_Text"]:SetText(nil);
         _G["LaFratellanza_Member" .. idx .. "_Rank_Texture"]:SetTexture(nil);
-        _G["LaFratellanza_Member" .. idx .. "_Rank"]:SetScript("OnEnter", nil);
-        _G["LaFratellanza_Member" .. idx .. "_Rank"]:SetScript("OnLeave", nil);
+        _G["LaFratellanza_Member" .. idx .. "_Note"]:SetScript("OnEnter", nil);
+        _G["LaFratellanza_Member" .. idx .. "_Note"]:SetScript("OnLeave", nil);
+        _G["LaFratellanza_Member" .. idx .. "_Invite"]:Hide();
+        _G["LaFratellanza_Member" .. idx .. "_Whisper"]:Hide();
     end
 end
 
@@ -163,31 +165,44 @@ function LaFratellanza_MemberListUpdate(index)
                     zone:SetTextColor(0.9, 0.9, 0.9);
             end
 
-            local rank = _G[memberFrame:GetName() .. "_Rank"];
+            local invite = _G[memberFrame:GetName() .. "_Invite"]
+            local whisper = _G[memberFrame:GetName() .. "_Whisper"]
+
+            if LaFratellanza_section == 'offline' then
+                invite:Hide();
+                whisper:Hide();
+            else
+                invite:Show();
+                whisper:Show();
+
+                invite:SetScript("OnClick", function()
+                    InviteUnit(LaFratellanza_guild_roster_filtered[idx+index].name)
+                end)
+
+                whisper:SetScript("OnClick", function()
+                    ChatFrame_SendTell(LaFratellanza_guild_roster_filtered[idx+index].name)
+                end)
+            end
+
             _G[memberFrame:GetName() .. "_Rank_Texture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\icons\rank_]] .. LaFratellanza_ToLowerCase(LaFratellanza_Trim(LaFratellanza_guild_roster_filtered[idx+index].rank)));
 
             if(LaFratellanza_guild_roster_filtered[idx+index].altOf) then
                 local main = _G[memberFrame:GetName() .. "_Main_Text"];
-                main:SetText(LaFratellanza_guild_roster_filtered[idx+index].altOf)
+                main:SetText(LaFratellanza_guild_roster_filtered[idx+index].altOf);
                 main:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE");
                 main:SetTextColor(0.7, 0.7, 0.7);
             end
             
-
-            -- if(0) then
-            --     rank:SetScript("OnEnter", function(self)
-            --         GameTooltip:SetOwner(self, "ANCHOR_TOP");
-            --         GameTooltip:SetText(LaFratellanza_ToUpperCase(LaFratellanza_guild_roster_filtered[idx+index].altOf), 1, 1, 1, true);
-            --         GameTooltip:Show();
-            --     end)
-        
-            --     rank:SetScript("OnLeave", function()
-            --         GameTooltip:Hide();
-            --     end)
-            -- end
-
-
-            
+            local note = _G[memberFrame:GetName() .. "_Note"]
+            note:SetScript("OnEnter", function(self)
+                GameTooltip:SetOwner(self, "ANCHOR_TOP");
+                GameTooltip:SetText(LaFratellanza_guild_roster_filtered[idx+index].note, 1, 1, 1, true);
+                GameTooltip:Show();
+            end)
+    
+            note:SetScript("OnLeave", function()
+                GameTooltip:Hide();
+            end)   
         end
     end
 end

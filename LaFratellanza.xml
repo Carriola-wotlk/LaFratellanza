@@ -212,12 +212,44 @@
 					</Layer>
 				</Layers>
 			</Button>
+			<Button name="$parent_Invite">
+				<Size x="32" y="32"/>
+					<Anchors>
+						<Anchor point="LEFT">
+							<Offset x="503" y="0"/>
+						</Anchor>
+					</Anchors>
+				<NormalTexture file="Interface\AddOns\LaFratellanza\texture\icons\invito_icon">
+					<Size>
+						<AbsDimension x="32" y="32"/>
+					</Size>
+					<Anchors>
+						<Anchor point="CENTER" />
+					</Anchors>
+				</NormalTexture>
+			</Button>
+			<Button name="$parent_Whisper">
+				<Size x="32" y="32"/>
+					<Anchors>
+						<Anchor point="LEFT">
+							<Offset x="535" y="0"/>
+						</Anchor>
+					</Anchors>
+				<NormalTexture file="Interface\AddOns\LaFratellanza\texture\icons\whisper_icon">
+					<Size>
+						<AbsDimension x="32" y="32"/>
+					</Size>
+					<Anchors>
+						<Anchor point="CENTER" />
+					</Anchors>
+				</NormalTexture>
+			</Button>
 
 			<Button name="$parent_Rank">
 				<Size x="64" y="32"/>
 					<Anchors>
 						<Anchor point="LEFT">
-							<Offset x="565" y="0"/>
+							<Offset x="573" y="0"/>
 						</Anchor>
 					</Anchors>
 				<NormalTexture name="$parent_Texture">
@@ -230,10 +262,10 @@
 				</NormalTexture>
 			</Button>
 			<Button name="$parent_Main">
-				<Size x="92" y="30"/>
+				<Size x="85" y="30"/>
 					<Anchors>
 						<Anchor point="LEFT">
-							<Offset x="640" y="0"/>
+							<Offset x="645" y="0"/>
 						</Anchor>
 					</Anchors>
 				<Layers>
@@ -241,6 +273,22 @@
 						<FontString name="$parent_Text" parentKey="title" inherits="GameFontNormal" wraponspaces="false" justifyH="LEFT" />
 					</Layer>
 				</Layers>
+			</Button>
+			<Button name="$parent_Note">
+				<Size x="32" y="32"/>
+					<Anchors>
+						<Anchor point="LEFT">
+							<Offset x="726" y="0"/>
+						</Anchor>
+					</Anchors>
+				<NormalTexture file="Interface\AddOns\LaFratellanza\texture\icons\note_icon">
+					<Size>
+						<AbsDimension x="32" y="32"/>
+					</Size>
+					<Anchors>
+						<Anchor point="CENTER" />
+					</Anchors>
+				</NormalTexture>
 			</Button>
 
 		</Frames>
@@ -283,7 +331,18 @@
 				</Texture>
 			</Layer>
 
-
+			<Layer level="OVERLAY">
+				<Texture file="Interface\AddOns\LaFratellanza\texture\frames\logo_la_Fratellanza">
+					<Size x="256" y="256"/>
+					<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="0" y="0"/>
+						</Offset>
+					</Anchor>
+					</Anchors>
+				</Texture>
+			</Layer>
 		</Layers>
 
 		<Frames>
@@ -473,7 +532,7 @@
 						<Size x="54" y="32"/>
 						<Anchors>
 							<Anchor point="TOPLEFT">
-								<Offset x="503" y="-20"/>
+								<Offset x="506" y="-20"/>
 							</Anchor>
 						</Anchors>
 						<Layers>
@@ -488,7 +547,7 @@
 						<Size x="70" y="32"/>
 						<Anchors>
 							<Anchor point="TOPLEFT">
-								<Offset x="563" y="-20"/>
+								<Offset x="570" y="-20"/>
 							</Anchor>
 						</Anchors>
 						<Layers>
@@ -503,7 +562,7 @@
 						<Size x="70" y="32"/>
 						<Anchors>
 							<Anchor point="TOPLEFT">
-								<Offset x="645" y="-20"/>
+								<Offset x="649" y="-20"/>
 							</Anchor>
 						</Anchors>
 						<Layers>

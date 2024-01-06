@@ -6,6 +6,8 @@ local scrollChild;
 local previousSelection = "Online";
 local previousSpecFilter = "All specs";
 local previousProfessionFilter = "All professions";
+local previousKeySort = "";
+local currentKeySort = "";
 
 function LaFratellanza_SplitString(inputString)
     local words = {};
@@ -272,7 +274,7 @@ function LaFratellanza_MembersScrollBarUpdate()
 end
 
 
-function LaFratellanza_GuildRosterFiltered()
+function LaFratellanza_GuildRoster_Filtered()
 
     LaFratellanza_guild_roster_filtered = {};
 
@@ -308,8 +310,32 @@ function LaFratellanza_GuildRosterFiltered()
 end
 
 
+function LaFratellanza_GuildRoster_Sorted()
+        local direction = "";
+        if(previousKeySort ~= currentKeySort) then
+            direction = "ASC";
+        else
+            direction = "DESC";
+        end
+
+        table.sort(LaFratellanza_guild_roster_filtered, function(a, b)
+            if direction == "ASC" then
+                return a[currentKeySort] < b[currentKeySort];
+            else
+                return a[currentKeySort] > b[currentKeySort];
+            end
+        end)
+
+        previousKeySort = currentKeySort;
+end
+
+
 function LaFratellanza_MembersFrameInit()
-    LaFratellanza_GuildRosterFiltered();
+    LaFratellanza_GuildRoster_Filtered();
+
+    if currentKeySort ~= "" then
+        LaFratellanza_GuildRoster_Sorted();
+    end
 
     listLength = #LaFratellanza_guild_roster_filtered;
     membersFrame:Show();
@@ -587,4 +613,10 @@ function LaFratellanza_Professions_DropDownOnClick(self, arg1, arg2, checked)
         LaFratellanza_MembersFrameInit();
     end
 
+end
+
+
+function LaFratellanza_Button_Members_Menu_Cliked(self, key)
+    currentKeySort = key;
+    LaFratellanza_MembersFrameInit();
 end

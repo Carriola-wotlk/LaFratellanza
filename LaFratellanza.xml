@@ -452,6 +452,11 @@
 								</FontString>
 							</Layer>
 						</Layers>
+						<Scripts>
+							<OnClick>
+								LaFratellanza_Button_Members_Menu_Cliked(self, "class")
+							</OnClick>
+						</Scripts>
 					</Button>
 					<Button name="$parent_Name_Menu">
 						<Size x="89" y="32"/>
@@ -467,6 +472,11 @@
 								</FontString>
 							</Layer>
 						</Layers>
+						<Scripts>
+							<OnClick>
+								LaFratellanza_Button_Members_Menu_Cliked(self, "name")
+							</OnClick>
+						</Scripts>
 					</Button>
 					<Button name="$parent_Lvl_Menu">
 						<Size x="31" y="32"/>
@@ -482,6 +492,11 @@
 								</FontString>
 							</Layer>
 						</Layers>
+						<Scripts>
+							<OnClick>
+								LaFratellanza_Button_Members_Menu_Cliked(self, "lvl")
+							</OnClick>
+						</Scripts>
 					</Button>
 					<Button name="$parent_Spec_Menu">
 						<Size x="81" y="32"/>
@@ -527,6 +542,11 @@
 								</FontString>
 							</Layer>
 						</Layers>
+						<Scripts>
+							<OnClick>
+								LaFratellanza_Button_Members_Menu_Cliked(self, "zone")
+							</OnClick>
+						</Scripts>
 					</Button>
 					<Button name="$parent_Actions_Menu">
 						<Size x="54" y="32"/>
@@ -557,6 +577,11 @@
 								</FontString>
 							</Layer>
 						</Layers>
+						<Scripts>
+							<OnClick>
+								LaFratellanza_Button_Members_Menu_Cliked(self, "rank")
+							</OnClick>
+						</Scripts>
 					</Button>
 					<Button name="$parent_Main_Menu">
 						<Size x="70" y="32"/>

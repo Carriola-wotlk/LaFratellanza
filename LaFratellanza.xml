@@ -341,7 +341,14 @@
 						</Offset>
 					</Anchor>
 					</Anchors>
-				</Texture>
+				</Texture>		
+				<FontString name="LaFratellanza_Addon_Version" parentKey="title" inherits="GameFontNormal" text="V0.1.1">
+					<Anchors>
+						<Anchor point="BOTTOMLEFT">
+							<Offset x="72" y="65"/>
+						</Anchor>
+					</Anchors>
+				</FontString>
 			</Layer>
 		</Layers>
 
@@ -394,6 +401,27 @@
 				</Layers>
 
 				<Frames>
+					<Button name="LaFratellanza_Refresh_Button">
+						<Size x="32" y="32"/>
+							<Anchors>
+								<Anchor point="TOPLEFT">
+									<Offset x="130" y="14"/>
+								</Anchor>
+							</Anchors>
+						<NormalTexture file="Interface\AddOns\LaFratellanza\texture\icons\refresh_icon">
+							<Size>
+								<AbsDimension x="32" y="32"/>
+							</Size>
+							<Anchors>
+								<Anchor point="CENTER" />
+							</Anchors>
+						</NormalTexture>
+						<Scripts>
+							<OnClick>
+								LaFratellanza_RefreshMembers();
+							</OnClick>
+						</Scripts>
+					</Button>
 					<Button name="LaFratellanza_Status_DropDownButton" inherits="UIDropDownMenuTemplate">
 						<Anchors>
 							<Anchor point="TOPLEFT">
@@ -613,9 +641,6 @@
 							</Layer>
 						</Layers>
 					</Button>
-
-
-
 				</Frames>
 
 			</Frame>

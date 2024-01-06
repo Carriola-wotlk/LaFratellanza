@@ -17,6 +17,11 @@ function LaFratellanza_SplitString(inputString)
     return words;
 end
 
+function LaFratellanza_RefreshMembers()
+    print("refresh");
+    GuildRoster();
+    LaFratellanza_RosterInit();
+end
 
 function LaFratellanza_DecodeNote(elements, result, name)
     local indexProf = 1;
@@ -106,10 +111,10 @@ function LaFratellanza_MemberListUpdate(index)
     for idx = 1, cycle do
         local memberFrame = _G["LaFratellanza_Member" .. idx];
 
-        if LaFratellanza_section == 'online' then
-            _G["LaFratellanza_Member" .. idx .. "_Background_Texture_Left"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\frames\member-left]]);
-            _G["LaFratellanza_Member" .. idx .. "_Background_Texture_Right"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\frames\member-right]]);
-        end
+        -- if LaFratellanza_section == 'online' then
+        --     _G["LaFratellanza_Member" .. idx .. "_Background_Texture_Left"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\frames\member-left]]);
+        --     _G["LaFratellanza_Member" .. idx .. "_Background_Texture_Right"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\frames\member-right]]);
+        -- end
 
         if LaFratellanza_section == 'offline' then
             memberFrame:SetAlpha(0.6);
@@ -211,8 +216,8 @@ end
 function LaFratellanza_MemberListInit()
     for idx = 1, 13 do
         local item = CreateFrame("Frame", "LaFratellanza_Member" .. idx, membersFrame, "LaFratellanza_Member_Template");
-        _G["LaFratellanza_Member" .. idx .. "_Background_Texture_Left"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\frames\member-left]]);
-        _G["LaFratellanza_Member" .. idx .. "_Background_Texture_Right"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\frames\member-right]]);
+        -- _G["LaFratellanza_Member" .. idx .. "_Background_Texture_Left"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\frames\member-left]]);
+        -- _G["LaFratellanza_Member" .. idx .. "_Background_Texture_Right"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\frames\member-right]]);
 
         if idx == 1 then
             item:SetPoint("TOP", 0, -60);

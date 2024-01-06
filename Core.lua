@@ -10,8 +10,13 @@ LaFratellanza_main_button:SetScript("OnDragStart", LaFratellanza_main_button.Sta
 LaFratellanza_main_button:SetScript("OnDragStop", LaFratellanza_main_button.StopMovingOrSizing);
 
 function LaFratellanza_CloseMainFrame()
+    LaFratellanza_ShowMembersFrame();
     LaFratellanza_is_open = false;
     _G["LaFratellanza_Main_Frame"]:Hide();
+    LaFratellanza_guild_roster = {
+        online = {},
+        offline = {},
+    };
     GuildRoster();
 end
 

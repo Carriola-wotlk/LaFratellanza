@@ -1,3 +1,6 @@
+BINDING_HEADER_LA_FRATELLANZA = "La Fratellanza"
+BINDING_NAME_LA_FRATELLANZA_MAIN_FRAME = "Apertura main frame"
+
 LaFratellanza_is_open = false;
 LaFratellanza_is_first_open = true;
 LaFratellanza_navBar = {"membri", "regolamento"};

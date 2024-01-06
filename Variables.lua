@@ -84,6 +84,7 @@ LaFratellanza_spec_table = {
     restoration = "Restoration",
     feral = "Feral",
     balance = "Balance",
+    bala = "Balance",
     pollo = "Balance",
     guardian = "Guardian",
 

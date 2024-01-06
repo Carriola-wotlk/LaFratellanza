@@ -394,7 +394,7 @@
 				</Layers>
 
 				<Frames>
-					<Button name="LaFratellanza_DropDownButton" inherits="UIDropDownMenuTemplate">
+					<Button name="LaFratellanza_Status_DropDownButton" inherits="UIDropDownMenuTemplate">
 						<Anchors>
 							<Anchor point="TOPLEFT">
 								<Offset x="180" y="10"/>
@@ -403,13 +403,13 @@
 						<Size x="150" y="30"/>
 						<Scripts>
 							<OnLoad>
-								UIDropDownMenu_Initialize(self, LaFratellanza_InitDropDown)
+								UIDropDownMenu_Initialize(self, LaFratellanza_Status_InitDropDown)
 								UIDropDownMenu_SetText(self, "Online")
 							</OnLoad>
 						</Scripts>
 					</Button>
 
-					<Button name="LaFratellanza_DropDownButton2" inherits="UIDropDownMenuTemplate">
+					<Button name="LaFratellanza_Specs_DropDownButton" inherits="UIDropDownMenuTemplate">
 						<Anchors>
 							<Anchor point="TOPLEFT">
 								<Offset x="460" y="10"/>
@@ -418,13 +418,13 @@
 						<Size x="150" y="30"/>
 						<Scripts>
 							<OnLoad>
-								UIDropDownMenu_Initialize(self, LaFratellanza_InitSpecsDropDown)
-								UIDropDownMenu_SetText(self, "All Specs")
+								UIDropDownMenu_Initialize(self, LaFratellanza_Specs_InitDropDown)
+								UIDropDownMenu_SetText(self, "All specs")
 							</OnLoad>
 						</Scripts>
 					</Button>
 
-					<Button name="LaFratellanza_DropDownButton3" inherits="UIDropDownMenuTemplate">
+					<Button name="LaFratellanza_Professions_DropDownButton" inherits="UIDropDownMenuTemplate">
 						<Anchors>
 							<Anchor point="TOPLEFT">
 								<Offset x="610" y="10"/>
@@ -433,8 +433,8 @@
 						<Size x="150" y="30"/>
 						<Scripts>
 							<OnLoad>
-								UIDropDownMenu_Initialize(self, LaFratellanza_InitDropDown)
-								UIDropDownMenu_SetText(self, "Online")
+								UIDropDownMenu_Initialize(self, LaFratellanza_Professions_InitDropDown)
+								UIDropDownMenu_SetText(self, "All professions")
 							</OnLoad>
 						</Scripts>
 					</Button>

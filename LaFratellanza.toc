@@ -7,4 +7,5 @@
 Core.lua
 Variables.lua
 Functions.lua
+Members.lua
 LaFratellanza.xml

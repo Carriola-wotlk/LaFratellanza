@@ -1,3 +1,5 @@
+LaFratellanza_is_open = false;
+LaFratellanza_is_first_open = true;
 LaFratellanza_navBar = {"membri", "regolamento"};
 LaFratellanza_guild_roster_names = {}
 LaFratellanza_guild_roster = {

@@ -18,7 +18,6 @@ function LaFratellanza_SplitString(inputString)
 end
 
 function LaFratellanza_RefreshMembers()
-    print("refresh");
     GuildRoster();
     LaFratellanza_RosterInit();
 end

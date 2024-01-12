@@ -33,13 +33,7 @@ function LaFratellanza_ShowMembersFrame()
     _G["LaFratellanza_Button2_NormalTexture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\buttons\button-normal]]);
     _G["LaFratellanza_main_texture_bottom_right"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\frames\main-bottom-right]]);
     _G["LaFratellanza_main_texture_top_right"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\frames\main-top-right]]);
-    _G["LaFratellanza_Main_Frame_Members"]:Show()
+    _G["LaFratellanza_Main_Frame_Rules"]:Hide();
+    _G["LaFratellanza_Main_Frame_Members"]:Show();
 end
 
-function LaFratellanza_ShowRulesFrame()
-    _G["LaFratellanza_Button1_NormalTexture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\buttons\button-normal]]);
-    _G["LaFratellanza_Button2_NormalTexture"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\buttons\button-press]]);
-    _G["LaFratellanza_main_texture_bottom_right"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\frames\regolamento-bottom-right]]);
-    _G["LaFratellanza_main_texture_top_right"]:SetTexture([[Interface\AddOns\LaFratellanza\texture\frames\regolamento-top-right]]);
-    _G["LaFratellanza_Main_Frame_Members"]:Hide()
-end

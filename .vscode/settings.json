@@ -1,8 +1,0 @@
-{
-    "Lua.diagnostics.globals": [
-        "UIDropDownMenu_CreateInfo",
-        "UIDropDownMenu_AddButton",
-        "UIDropDownMenu_SetText",
-        "ChatFrame_SendTell"
-    ]
-}

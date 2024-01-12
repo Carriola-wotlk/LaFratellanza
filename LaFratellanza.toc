@@ -2,10 +2,11 @@
 ## Title: LaFratellanza
 ## Notes: Addon sviluppato per la gilda La Fratellanza sul server ChromieCraft
 ## Author: Carriola, lo gnomo più alto di tutto il server
-## Version: 0.1.0
+## Version: 0.2.0
 
 Core.lua
 Variables.lua
 Functions.lua
 Members.lua
+Rules.lua
 LaFratellanza.xml

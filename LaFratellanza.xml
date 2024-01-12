@@ -342,7 +342,7 @@
 					</Anchor>
 					</Anchors>
 				</Texture>		
-				<FontString name="LaFratellanza_Addon_Version" parentKey="title" inherits="GameFontNormal" text="V0.1.1">
+				<FontString name="LaFratellanza_Addon_Version" parentKey="title" inherits="GameFontNormal" text="V0.2.0">
 					<Anchors>
 						<Anchor point="BOTTOMLEFT">
 							<Offset x="72" y="65"/>
@@ -607,7 +607,7 @@
 						</Layers>
 						<Scripts>
 							<OnClick>
-								LaFratellanza_Button_Members_Menu_Cliked(self, "rank")
+								LaFratellanza_Button_Members_Menu_Cliked(self, "rankIndex")
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -625,6 +625,11 @@
 								</FontString>
 							</Layer>
 						</Layers>
+						<Scripts>
+							<OnClick>
+								LaFratellanza_Button_Members_Menu_Cliked(self, "altOf")
+							</OnClick>
+						</Scripts>
 					</Button>
 					<Button name="$parent_Note_Menu">
 						<Size x="32" y="32"/>
@@ -649,6 +654,12 @@
 
 		<Scripts>
 			<OnLoad function="LaFratellanza_OnLoad"/>
+			<OnMouseDown>
+				LaFratellanza_Main_Frame:StartMoving();
+			</OnMouseDown>
+			<OnMouseUp>
+				LaFratellanza_Main_Frame:StopMovingOrSizing();
+			</OnMouseUp>
 		</Scripts>
 	</Frame>
 

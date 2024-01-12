@@ -1,8 +1,19 @@
-BINDING_HEADER_LA_FRATELLANZA = "La Fratellanza"
-BINDING_NAME_LA_FRATELLANZA_MAIN_FRAME = "Apertura main frame"
+BINDING_HEADER_LA_FRATELLANZA = "La Fratellanza";
+BINDING_NAME_LA_FRATELLANZA_MAIN_FRAME = "Apertura main frame";
 
-LaFratellanza_is_open = false;
+LaFratellanza_main_frame = nil;
+LaFratellanza_channel = "LaFratellanzaChannel";
+LaFratellanza_chatFrame = nil;
+LaFratellanza_chatFrameTab = nil;
+LaFratellanza_chatFrameButtonFrame = nil;
+LaFratellanza_chatFrameEditBox = nil;
+LaFratellanza_chatFrameResizer = nil;
+
+LaFratellanza_members_frame = nil;
+LaFratellanza_rosterInProgress = false;
+
 LaFratellanza_is_first_open = true;
+LaFratellanza_navBar_current_button = "membri";
 LaFratellanza_navBar = {"membri", "regolamento"};
 LaFratellanza_guild_roster_names = {}
 LaFratellanza_guild_roster = {
@@ -14,11 +25,28 @@ LaFratellanza_section = "online";
 LaFratellanza_prof_filter = "All professions";
 LaFratellanza_spec_filter = "All specs";
 
+LaFratellanza_note_frame = nil;
+LaFratellanza_note_frame_title = nil;
+LaFratellanza_note_frame_personal_note = nil;
+LaFratellanza_note_frame_officer_note = nil;
+LaFratellanza_note_frame_save = nil;
+
+LaFratellanza_Rank_Edit_Note = {
+    raider = false,
+    membro = false,
+    alt = false,
+    gbanker = true,
+    ufficiale = true,
+    veterano = false,
+    recluta = false
+}
+
 LaFratellanza_prof_table = {
     skin = "Skinning",
     skinning = "Skinning",
 
     alchemy = "Alchemy",
+    alchem = "Alchemy",
     alc = "Alchemy",
     alk = "Alchemy",
     alch = "Alchemy",
@@ -93,6 +121,7 @@ LaFratellanza_spec_table = {
     marksmanship = "Marksmanship",
     mm = "Marksmanship",
     survival = "Survival",
+    surv = "Survival",
 
     affliction = "Affliction",
     affly = "Affliction",
